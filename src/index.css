@@ -1,0 +1,206 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;0,14..32,900&display=swap');
+@import "tailwindcss";
+
+/* ─── Design Tokens ──────────────────────────────────────── */
+
+:root {
+  /* Surfaces */
+  --bg-main:        #ffffff;
+  --bg-section:     #f5f5f7;
+  --bg-card:        #ffffff;
+  --border-card:    rgba(0, 0, 0, 0.07);
+
+  /* Typography */
+  --text-primary:   #1d1d1f;
+  --text-secondary: #6e6e73;
+  --text-muted:     #86868b;
+
+  /* Accent palette */
+  --accent-blue:    #0071e3;
+  --accent-purple:  #af52de;
+  --accent-green:   #34c759;
+  --accent-orange:  #ff9500;
+
+  /* Shadows — barely visible, Apple-style */
+  --card-shadow:    0 2px 8px rgba(0,0,0,0.04), 0 0.5px 2px rgba(0,0,0,0.03);
+
+  /* UI chrome */
+  --header-bg:      rgba(255, 255, 255, 0.82);
+  --pill-bg:        rgba(0, 0, 0, 0.04);
+  --pill-border:    rgba(0, 0, 0, 0.07);
+  --input-bg:       rgba(0, 0, 0, 0.025);
+  --input-border:   rgba(0, 0, 0, 0.1);
+}
+
+.dark {
+  --bg-main:        #000000;
+  --bg-section:     #0a0a0a;
+  --bg-card:        rgba(28, 28, 30, 0.75);
+  --border-card:    rgba(255, 255, 255, 0.07);
+  --text-primary:   #f5f5f7;
+  --text-secondary: #98989d;
+  --text-muted:     #636366;
+  --accent-blue:    #2997ff;
+  --accent-purple:  #bf5af2;
+  --accent-green:   #30d158;
+  --accent-orange:  #ff9f0a;
+  --card-shadow:    0 4px 24px rgba(0,0,0,0.35), 0 1px 4px rgba(0,0,0,0.2);
+  --header-bg:      rgba(0, 0, 0, 0.72);
+  --pill-bg:        rgba(255, 255, 255, 0.06);
+  --pill-border:    rgba(255, 255, 255, 0.1);
+  --input-bg:       rgba(255, 255, 255, 0.04);
+  --input-border:   rgba(255, 255, 255, 0.1);
+}
+
+/* ─── Tailwind theme bridge ──────────────────────────────── */
+
+@theme {
+  --font-sans:    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --color-bg-main:            var(--bg-main);
+  --color-bg-section:         var(--bg-section);
+  --color-bg-card:            var(--bg-card);
+  --color-border-card:        var(--border-card);
+  --color-text-primary:       var(--text-primary);
+  --color-text-secondary:     var(--text-secondary);
+  --color-text-muted:         var(--text-muted);
+  --color-accent-blue:        var(--accent-blue);
+  --color-accent-purple:      var(--accent-purple);
+  --color-accent-green:       var(--accent-green);
+  --color-accent-orange:      var(--accent-orange);
+  --color-header-bg:          var(--header-bg);
+  --color-pill-bg:            var(--pill-bg);
+  --color-pill-border:        var(--pill-border);
+  --color-input-bg:           var(--input-bg);
+  --color-input-border:       var(--input-border);
+}
+
+/* ─── Reset ──────────────────────────────────────────────── */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* ─── Typography ─────────────────────────────────────────── */
+
+/* Apple uses tighter tracking for all headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  font-weight: 700;
+}
+
+/* ─── Selection ──────────────────────────────────────────── */
+
+::selection {
+  background: rgba(0, 113, 227, 0.25);
+  color: var(--text-primary);
+}
+
+/* ─── Scrollbar — macOS-thin ─────────────────────────────── */
+
+::-webkit-scrollbar       { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--pill-border);
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+/* ─── Cursor blink ───────────────────────────────────────── */
+
+@keyframes blink { 50% { opacity: 0; } }
+.animate-blink { animation: blink 0.9s step-end infinite; }
+
+/* ─── Certificate carousel ───────────────────────────────── */
+
+@keyframes scroll-left {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.carousel-track {
+  display: flex;
+  gap: 1.5rem;
+  width: max-content;
+  animation: scroll-left 32s linear infinite;
+}
+.carousel-track:hover { animation-play-state: paused; }
+
+.carousel-wrapper {
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+}
+
+/* ─── Apple Card ─────────────────────────────────────────── */
+
+.premium-card {
+  background:    var(--bg-card);
+  border:        1px solid var(--border-card);
+  border-radius: 22px;              /* Apple's canonical 22px radius */
+  box-shadow:    var(--card-shadow);
+  transition:    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                 box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                 border-color 0.4s ease;
+}
+
+.premium-card:hover {
+  transform:    translateY(-1px);
+  box-shadow:   0 8px 28px rgba(0,0,0,0.07), 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.dark .premium-card:hover {
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 4px 12px rgba(0,0,0,0.25);
+  border-color: rgba(255,255,255,0.12);
+}
+
+/* ─── Section layout container ───────────────────────────── */
+
+/* Single source of truth for ALL section widths */
+.section-container {
+  width: 100%;
+  max-width: 1024px;
+  margin-left:  auto;
+  margin-right: auto;
+  padding-left:  1.5rem;
+  padding-right: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .section-container {
+    padding-left:  2rem;
+    padding-right: 2rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .section-container {
+    max-width: 1100px;    /* Wider breathing room on large screens */
+  }
+}
