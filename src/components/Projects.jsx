@@ -1,35 +1,121 @@
-import { motion, useInView } from 'framer-motion'
-import { useRef } from 'react'
-import { ExternalLink, Layers } from 'lucide-react'
+import { motion, useInView, AnimatePresence } from 'framer-motion'
+import { useRef, useState, useEffect } from 'react'
+import { ExternalLink, Layers, X, ChevronLeft, ChevronRight, Image as ImageIcon } from 'lucide-react'
 import GithubIcon from './GithubIcon'
 
 const projects = [
   {
-    title: 'FarmVaani',
-    subtitle: 'AgriTech Platform',
-    role: 'Full Stack Contributor',
-    problem:
-      'Farmers lack real-time access to localised agricultural advisory services and peer connection, leading to crop losses and delayed decision-making.',
-    solution:
-      'Designed React.js frontends integrated with a Django REST API backend to power real-time forums, weather feeds, and AI crop advisories.',
-    impact:
-      'Improved page-load performance and gave rural users a robust dashboard that loads advisory updates asynchronously.',
-    tech: ['React.js', 'Django', 'REST API', 'PostgreSQL', 'Tailwind CSS', 'Git'],
+    title: 'FIXMYAREA AI',
+    subtitle: 'Civic Issue Reporting Platform',
+    role: 'Full Stack Developer',
+    problem: 'Traditional civic reporting methods are slow, manual, and often lack transparency, making it hard for authorities to prioritize issues.',
+    solution: 'Built a platform where citizens drop map pins and upload photos of issues. Gemini Vision AI instantly analyzes, categorizes, and assigns severity scores.',
+    impact: 'Enables faster response times from authorities through AI triaging and increases citizen engagement with public issue tracking.',
+    tech: ['React.js', 'TypeScript', 'Tailwind', 'Firebase', 'Gemini AI', 'Google Maps'],
     features: [
-      'Asynchronous crop status dashboard',
-      'Community forums with image/voice sharing',
-      'AI advisory integration via image upload',
-      'Responsive design across mobile and desktop',
+      'AI Automated Triage using Gemini Vision API',
+      'Interactive Real-Time Dashboards for city health indices',
+      'Gemini AI Civic Assistant for summarizing reports',
+      'Live Sighting & Timeline Feeds for progress tracking',
     ],
-    github: 'https://github.com/rajjaat250',
-    live:   'https://github.com/rajjaat250',
-    image:  '/images/projects/farmvaani.jpg',
+    github: 'https://github.com/rajjaat250/FIXMYAREA',
+    live:   'https://untitled-1035348437563.us-west1.run.app',
+    image:  '/images/projects/fixmyarea-1.jpg',
+    gallery: [
+      '/images/projects/fixmyarea-1.jpg',
+      '/images/projects/fixmyarea-2.jpg',
+      '/images/projects/fixmyarea-3.jpg',
+      '/images/projects/fixmyarea-4.jpg',
+      '/images/projects/fixmyarea-5.jpg',
+    ],
+  },
+  {
+    title: 'Indestack Ecommerce',
+    subtitle: 'Full-Stack Ecommerce Application',
+    role: 'Full Stack Developer',
+    problem: 'Needed a scalable, robust platform for managing users, products, orders, and authentication in an ecommerce environment.',
+    solution: 'Developed a fast React/Vite frontend integrated with a Django REST Framework backend to ensure secure and efficient data management.',
+    impact: 'Delivered a seamless shopping experience with efficient product management and secure payment processing capabilities.',
+    tech: ['React', 'Vite', 'Tailwind', 'Python', 'Django', 'REST Framework'],
+    features: [
+      'Comprehensive product and order management',
+      'Secure user authentication and authorization',
+      'Responsive frontend built with Tailwind CSS',
+      'RESTful API backend powered by Django',
+    ],
+    github: 'https://github.com/rajjaat250/ecommerce',
+    live:   'https://indestack.live',
+    image:  '/images/projects/ecommerce-1.jpg',
+    gallery: [
+      '/images/projects/ecommerce-1.jpg',
+      '/images/projects/ecommerce-2.jpg',
+      '/images/projects/ecommerce-3.jpg',
+      '/images/projects/ecommerce-4.jpg',
+    ],
+  },
+  {
+    title: 'Stake Game Clone',
+    subtitle: 'Online Gaming Platform',
+    role: 'Frontend Developer',
+    problem: 'Required a highly interactive, real-time gaming platform frontend with a seamless user experience and robust state management.',
+    solution: 'Developed the frontend using React.js, integrating it with a Node.js/MongoDB/Redis backend built by a collaborator for real-time play.',
+    impact: 'Created a responsive, engaging gaming interface that mirrors the original platform with secure server-side authentication.',
+    tech: ['React.js', 'Node.js', 'MongoDB', 'Redis', 'Vercel'],
+    features: [
+      'Real-time game interactions and updates',
+      'Secure server-side authentication integration',
+      'Responsive and dynamic user interface',
+      'Scalable architecture for high concurrency',
+    ],
+    github: '',
+    live:   'https://stakegameclone.vercel.app/',
+    image:  '/images/projects/stakeclone-1.jpg',
+    gallery: [
+      '/images/projects/stakeclone-1.jpg',
+      '/images/projects/stakeclone-2.jpg',
+    ],
   },
 ]
 
 export default function Projects() {
   const ref    = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
+
+  // Modal State
+  const [activeProject, setActiveProject] = useState(null)
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
+
+  useEffect(() => {
+    if (activeProject) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [activeProject])
+
+  const nextImage = (e) => {
+    e.stopPropagation()
+    if (activeProject && activeProject.gallery) {
+      setCurrentImageIndex((prev) => (prev + 1) % activeProject.gallery.length)
+    }
+  }
+
+  const prevImage = (e) => {
+    e.stopPropagation()
+    if (activeProject && activeProject.gallery) {
+      setCurrentImageIndex((prev) => (prev - 1 + activeProject.gallery.length) % activeProject.gallery.length)
+    }
+  }
+
+  const openGallery = (project) => {
+    if (project.gallery && project.gallery.length > 0) {
+      setActiveProject(project)
+      setCurrentImageIndex(0)
+    }
+  }
 
   return (
     <section
@@ -66,8 +152,10 @@ export default function Projects() {
             className="premium-card overflow-hidden w-full"
           >
             {/* Screenshot banner */}
-            <div className="relative w-full aspect-video bg-pill-bg overflow-hidden"
+            <div 
+              className="relative w-full aspect-video bg-pill-bg overflow-hidden group cursor-pointer"
               style={{ borderBottom: '1px solid var(--border-card)' }}
+              onClick={() => openGallery(project)}
             >
               <img
                 src={project.image}
@@ -76,14 +164,24 @@ export default function Projects() {
                   e.target.style.display = 'none'
                   e.target.nextSibling.style.display = 'flex'
                 }}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
               />
               <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-bg-section">
                 <Layers size={22} className="text-text-muted" />
                 <span className="text-[11px] text-text-muted font-medium text-center leading-normal">
-                  Add screenshot to<br />public/images/projects/farmvaani.jpg
+                  Add screenshot to<br />public{project.image}
                 </span>
               </div>
+              
+              {/* Overlay for gallery */}
+              {project.gallery && project.gallery.length > 0 && (
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                   <div className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white text-[13px] font-semibold tracking-wide">
+                     <ImageIcon size={16} />
+                     View Gallery ({project.gallery.length})
+                   </div>
+                </div>
+              )}
             </div>
 
             {/* Body */}
@@ -148,29 +246,119 @@ export default function Projects() {
 
               {/* CTAs — centred, Apple pattern */}
               <div className="flex flex-wrap items-center justify-center gap-4">
-                <a
-                  href={project.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-text-primary text-bg-main text-[13px] font-semibold hover:opacity-80 transition-opacity"
-                >
-                  <GithubIcon size={14} />
-                  View on GitHub
-                </a>
-                <a
-                  href={project.live}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[14px] font-medium text-accent-blue hover:underline underline-offset-2 flex items-center gap-1.5"
-                >
-                  <ExternalLink size={13} />
-                  Live Demo&nbsp;→
-                </a>
+                {project.github && (
+                  <a
+                    href={project.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-text-primary text-bg-main text-[13px] font-semibold hover:opacity-80 transition-opacity"
+                  >
+                    <GithubIcon size={14} />
+                    View on GitHub
+                  </a>
+                )}
+                {project.live && (
+                  <a
+                    href={project.live}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[14px] font-medium text-accent-blue hover:underline underline-offset-2 flex items-center gap-1.5"
+                  >
+                    <ExternalLink size={13} />
+                    Live Demo&nbsp;→
+                  </a>
+                )}
               </div>
             </div>
           </motion.div>
         ))}
       </div>
+
+      {/* Gallery Modal */}
+      <AnimatePresence>
+        {activeProject && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 md:p-12 cursor-zoom-out"
+            onClick={() => setActiveProject(null)}
+          >
+            <button
+              onClick={() => setActiveProject(null)}
+              className="absolute top-6 right-6 md:top-8 md:right-8 z-50 p-2 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
+            >
+              <X size={24} />
+            </button>
+
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0, y: 10 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.95, opacity: 0, y: 10 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+              className="relative w-full max-w-6xl aspect-[16/9] md:aspect-auto md:h-[85vh] bg-black rounded-xl overflow-hidden shadow-2xl flex flex-col cursor-default"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Main Image Viewer */}
+              <div className="relative flex-grow flex items-center justify-center overflow-hidden bg-bg-card/20 group">
+                <img
+                  key={currentImageIndex} // forces re-render for smooth transition or handled by motion if we want
+                  src={activeProject.gallery[currentImageIndex]}
+                  alt={`${activeProject.title} screenshot ${currentImageIndex + 1}`}
+                  onError={(e) => {
+                    e.target.style.display = 'none'
+                    e.target.nextSibling.style.display = 'flex'
+                  }}
+                  className="w-full h-full object-contain"
+                />
+                
+                {/* Fallback for missing image */}
+                <div className="absolute inset-0 hidden flex-col items-center justify-center gap-3 bg-bg-card border border-border-card">
+                  <Layers size={32} className="text-text-muted" />
+                  <span className="text-[12px] text-text-muted font-medium text-center">
+                    Image missing at<br />public{activeProject.gallery[currentImageIndex]}
+                  </span>
+                </div>
+
+                {/* Left/Right Controls */}
+                {activeProject.gallery.length > 1 && (
+                  <>
+                    <button
+                      onClick={prevImage}
+                      className="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/50 backdrop-blur-sm border border-white/10 text-white hover:bg-black/80 transition-colors opacity-0 group-hover:opacity-100 disabled:opacity-0"
+                    >
+                      <ChevronLeft size={24} />
+                    </button>
+                    <button
+                      onClick={nextImage}
+                      className="absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/50 backdrop-blur-sm border border-white/10 text-white hover:bg-black/80 transition-colors opacity-0 group-hover:opacity-100 disabled:opacity-0"
+                    >
+                      <ChevronRight size={24} />
+                    </button>
+                  </>
+                )}
+              </div>
+
+              {/* Thumbnails Footer */}
+              {activeProject.gallery.length > 1 && (
+                <div className="h-24 md:h-28 bg-bg-main border-t border-border-card p-3 flex gap-3 overflow-x-auto items-center justify-start hide-scrollbar shrink-0">
+                  {activeProject.gallery.map((img, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setCurrentImageIndex(idx)}
+                      className={`relative h-full aspect-video rounded-md overflow-hidden shrink-0 border-2 transition-all ${
+                        idx === currentImageIndex ? 'border-accent-blue opacity-100' : 'border-transparent opacity-50 hover:opacity-100'
+                      }`}
+                    >
+                      <img src={img} alt={`Thumbnail ${idx+1}`} className="w-full h-full object-cover pointer-events-none" />
+                    </button>
+                  ))}
+                </div>
+              )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   )
 }

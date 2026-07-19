@@ -7,7 +7,7 @@ const education = [
     period: '2024 — 2028',
     degree: 'B.Tech in Computer Science & IT',
     school: 'Ajay Kumar Garg Engineering College, Ghaziabad',
-    detail: '3rd Year · SGPA 7.91',
+    detail: '3rd Year · CGPA 7.86',
     active: true,
   },
   {
@@ -118,17 +118,14 @@ export default function About() {
             {/* Bio paragraphs */}
             <div className="space-y-4">
               <p className="text-[16px] md:text-[17px] leading-relaxed text-text-primary font-medium tracking-[-0.01em]">
-                Hi, I&apos;m Raj — a B.Tech CSIT student at{' '}
+                Hi, I&apos;m Raj — a Third-year B.Tech CSIT student at{' '}
                 <span className="text-accent-blue font-semibold">
                   Ajay Kumar Garg Engineering College
                 </span>
-                , Ghaziabad. I specialise in backend architecture,
-                databases, and polished frontend interfaces.
+                , Ghaziabad. I specialise in full-stack web development with Python/Django and React.
               </p>
               <p className="text-[14px] md:text-[15px] leading-relaxed text-text-secondary">
-                I build developer utilities, database-driven applications,
-                and scalable full-stack architectures using React, Django, and
-                modern tooling — with clean typography and accessibility in mind.
+                Experienced in building REST APIs, responsive frontends, and end-to-end web applications. Comfortable working with AI-assisted development tools to accelerate delivery while maintaining strong command over the underlying architecture and code.
               </p>
             </div>
 

@@ -4,33 +4,17 @@ import { Briefcase, Calendar, MapPin } from 'lucide-react'
 
 const experiences = [
   {
-    role:     'Frontend Web Developer Intern',
+    role:     'Web Development Intern',
     company:  'Cognifyz Technologies',
-    type:     'Remote Internship',
-    duration: '1 Month · 2025',
+    type:     'Internship',
+    duration: 'June 2025 – July 2025',
     location: 'Remote',
     accent:   'var(--accent-blue)',
     accentBg: 'rgba(0, 113, 227, 0.07)',
     highlights: [
-      'Developed responsive UI components using HTML, CSS, and JavaScript.',
-      'Delivered real-world tasks aligned with production code standards.',
-      'Participated in professional code-review workflows.',
-      'Improved UI consistency and cross-browser compatibility across deliverables.',
-    ],
-  },
-  {
-    role:     'Full Stack Contributor',
-    company:  'FarmVaani',
-    type:     'AgriTech Open Contribution',
-    duration: '2026 – Present',
-    location: 'Remote',
-    accent:   'var(--accent-green)',
-    accentBg: 'rgba(52, 199, 89, 0.07)',
-    highlights: [
-      'Built interactive React.js interfaces and robust Django backend systems end-to-end.',
-      'Designed REST API endpoints enabling real-time community chat and AI advisory features.',
-      'Developed responsive Tailwind CSS layouts for cross-device compatibility.',
-      'Collaborated with maintainers via git workflows to ship modular production components.',
+      'Contributed to real web development assignments and gained hands-on exposure to professional workflows.',
+      'Developed responsive UI components and delivered real-world tasks aligned with production code standards.',
+      'Maintained strong attention to detail and effective team communication throughout the internship.',
     ],
   },
 ]

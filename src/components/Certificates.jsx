@@ -5,10 +5,10 @@ import { Award, ImageOff, X, ExternalLink } from 'lucide-react'
 // Add your certificate images to public/images/certificates/
 // Name them cert1.jpg, cert2.jpg, etc. OR update the list below.
 const certificates = [
-  { id: 1, title: 'Frontend Web Developer Intern', issuer: 'Cognifyz Technologies', src: '/images/certificates/cognifyz.png' },
-  { id: 2, title: 'cyber security', issuer: 'infosys', src: '/images/certificates/infoysescybersecurity.png' },
-  { id: 3, title: 'hackathon1', issuer: 'ABESIT', src: '/images/certificates/abesithackthone.png' },
-  { id: 4, title: 'Software Engineering Job Simulation', issuer: 'JP MORGAN CHASE AND Go', src: '/images/certificates/jpmorganforage.png' },
+  { id: 1, title: 'Web Development Internship', issuer: 'Cognifyz Technologies', src: '/images/certificates/cognifyz.png' },
+  { id: 2, title: 'Introduction to Cyber Security', issuer: 'Infosys Springboard', src: '/images/certificates/infoysescybersecurity.png' },
+  { id: 3, title: 'Hacknovate 7.0 Participant (Team Code4Coders)', issuer: 'ABES Institute of Technology', src: '/images/certificates/abesithackthone.png' },
+  { id: 4, title: 'Software Engineering Job Simulation', issuer: 'JPMorgan Chase & Co.', src: '/images/certificates/jpmorganforage.png' },
 ]
 
 // Duplicate for seamless infinite loop

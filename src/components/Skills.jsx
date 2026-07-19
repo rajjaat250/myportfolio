@@ -44,7 +44,7 @@ const bento = [
     skills: [
       { name: 'Django',      icon: Server   },
       { name: 'Python',      icon: Terminal },
-      { name: 'PostgreSQL',  icon: Database },
+      { name: 'DRF & SQL',   icon: Database },
       { name: 'REST APIs',   icon: Database },
     ],
   },
@@ -57,9 +57,9 @@ const bento = [
     desc: 'Development workflow and deployment pipelines.',
     skills: [
       { name: 'Git & GitHub', icon: GitBranch },
-      { name: 'VS Code',      icon: Monitor   },
+      { name: 'Firebase',     icon: Cloud     },
+      { name: 'AI Studio',    icon: Brain     },
       { name: 'Vercel',       icon: Cloud     },
-      { name: 'Render',       icon: Cloud     },
     ],
   },
   {

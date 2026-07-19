@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { ArrowDown } from 'lucide-react'
 
-const words = ['Full Stack Developer', 'Software Engineer', 'Backend Developer']
+const words = ['Python / Django Developer', 'React & Frontend Developer', 'Full Stack Developer']
 
 const up = (delay = 0) => ({
   initial:    { opacity: 0, y: 18 },
@@ -51,14 +51,14 @@ export default function Hero() {
     >
       {/* Ambient glow — dead centre, non-interactive */}
       <div
-        className="pointer-events-none absolute inset-0"
+        className="pointer-events-none absolute inset-0 overflow-hidden"
         aria-hidden="true"
       >
         <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] rounded-full"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] md:w-[1000px] h-[600px] md:h-[1000px] rounded-full blur-[100px] opacity-40 md:opacity-30 mix-blend-screen"
           style={{
             background:
-              'radial-gradient(ellipse at center, rgba(0,113,227,0.05) 0%, transparent 65%)',
+              'radial-gradient(circle at 30% 30%, var(--accent-purple) 0%, transparent 45%), radial-gradient(circle at 70% 70%, var(--accent-blue) 0%, transparent 45%)',
           }}
         />
       </div>
@@ -68,8 +68,8 @@ export default function Hero() {
 
         {/* Availability badge */}
         <motion.div {...up(0.1)} className="mb-8">
-          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-pill-bg border border-pill-border text-[11px] font-semibold text-text-secondary tracking-[0.06em] uppercase">
-            <span className="w-1.5 h-1.5 rounded-full bg-accent-green animate-pulse shrink-0" />
+          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-pill-bg border border-pill-border text-[11px] font-semibold text-text-primary tracking-[0.06em] uppercase backdrop-blur-md">
+            <span className="w-1.5 h-1.5 rounded-full bg-accent-green animate-pulse shrink-0 shadow-[0_0_8px_var(--accent-green)]" />
             Open to Internships
           </span>
         </motion.div>
@@ -80,7 +80,7 @@ export default function Hero() {
         */}
         <motion.h1
           {...up(0.18)}
-          className="font-black leading-none mb-6 select-none bg-gradient-to-b from-text-primary to-text-muted bg-clip-text text-transparent"
+          className="font-black leading-none mb-6 select-none bg-gradient-to-r from-accent-purple via-accent-blue to-accent-green bg-clip-text text-transparent"
           style={{
             fontSize: 'clamp(52px, 11vw, 120px)',
             letterSpacing: '-0.04em',
