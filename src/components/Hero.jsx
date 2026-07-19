@@ -1,131 +1,158 @@
 import { motion } from 'framer-motion'
-import { ArrowRight, Code2, Database, Layout, Sparkles } from 'lucide-react'
+import { ArrowRight, Mail } from 'lucide-react'
+import GithubIcon from './GithubIcon'
+import LinkedinIcon from './LinkedinIcon'
 import { Link } from 'react-router-dom'
-
-const FloatingIcon = ({ children, delay, x, y, rotate }) => (
-  <motion.div
-    initial={{ opacity: 0, scale: 0.5, rotate: 0 }}
-    animate={{ opacity: 1, scale: 1, rotate }}
-    transition={{ duration: 1, delay, type: 'spring' }}
-    className="absolute z-20"
-    style={{ left: x, top: y }}
-  >
-    <motion.div
-      animate={{ y: [0, -15, 0] }}
-      transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay }}
-      className="p-4 rounded-2xl bg-white/60 backdrop-blur-xl border border-white/40 shadow-xl"
-    >
-      {children}
-    </motion.div>
-  </motion.div>
-)
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center pt-24 pb-12 overflow-hidden bg-bg-main">
-      {/* Dynamic Background Gradients */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-1/4 -right-1/4 w-[800px] h-[800px] rounded-full blur-[120px] bg-accent-blue/10 animate-pulse" />
-        <div className="absolute -bottom-1/4 -left-1/4 w-[800px] h-[800px] rounded-full blur-[120px] bg-accent-purple/10" />
+    <section className="relative pt-32 pb-16 md:pt-48 md:pb-32 overflow-hidden bg-slate-50">
+      {/* Abstract Background Decoration */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-0 right-0 -mr-20 -mt-20 w-[600px] h-[600px] bg-brand-100/50 rounded-full blur-3xl opacity-50" />
+        <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-[500px] h-[500px] bg-blue-100/50 rounded-full blur-3xl opacity-50" />
       </div>
 
-      <div className="section-container relative z-10 grid lg:grid-cols-2 gap-12 lg:gap-8 items-center h-full">
-        {/* Left Side: Typography & CTAs */}
-        <div className="flex flex-col gap-8 max-w-2xl">
-          <motion.div 
+      <div className="section-container relative z-10 grid lg:grid-cols-2 gap-12 items-center">
+        {/* Left Column: Text & CTA */}
+        <div className="flex flex-col gap-6">
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.5 }}
             className="flex items-center gap-3"
           >
-            <span className="px-4 py-1.5 rounded-full bg-accent-blue/10 border border-accent-blue/20 text-accent-blue text-sm font-semibold flex items-center gap-2">
-              <Sparkles size={16} />
-              Full Stack Developer
-            </span>
-            <span className="px-4 py-1.5 rounded-full bg-accent-green/10 border border-accent-green/20 text-accent-green text-sm font-semibold flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-accent-green animate-pulse" />
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-100 text-brand-700 text-sm font-semibold">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-500 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-600"></span>
+              </span>
               Available for Internships
             </span>
           </motion.div>
 
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="text-5xl sm:text-6xl lg:text-7xl font-extrabold text-slate-900 tracking-tight leading-[1.1]"
+          >
+            Building the next <br className="hidden sm:block" />
+            generation of <br className="hidden sm:block" />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
+              web experiences.
+            </span>
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="text-lg sm:text-xl text-slate-600 leading-relaxed max-w-lg"
+          >
+            I'm a full-stack developer who transforms complex problems into elegant, scalable, and highly performant applications.
+          </motion.p>
+
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="flex flex-wrap items-center gap-4 pt-2"
           >
-            <h1 className="text-6xl sm:text-7xl lg:text-8xl font-black text-text-primary tracking-tight leading-[1.05] mb-6">
-              Engineering <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-blue via-accent-purple to-accent-pink">
-                Digital Dreams
-              </span>
-            </h1>
-            <p className="text-lg md:text-xl text-text-secondary leading-relaxed max-w-xl font-medium">
-              Hi, I'm Raj Chaudhary. I architect scalable backend systems and craft high-performance, interactive user experiences.
-            </p>
-          </motion.div>
-
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex flex-wrap items-center gap-4 mt-2"
-          >
-            <Link to="/projects" className="group relative inline-flex items-center gap-2 px-8 py-4 rounded-full bg-text-primary text-white font-semibold text-base overflow-hidden hover:scale-105 transition-transform duration-300">
-              <div className="absolute inset-0 bg-gradient-to-r from-accent-blue to-accent-purple opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <span className="relative flex items-center gap-2">
-                Explore Work <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-              </span>
+            <Link
+              to="/projects"
+              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-brand-600 text-white font-semibold hover:bg-brand-700 transition-colors shadow-lg shadow-brand-500/25"
+            >
+              View My Work <ArrowRight size={18} />
             </Link>
-            
-            <a href="/resume.pdf" download className="px-8 py-4 rounded-full bg-pill-bg border-2 border-border-card text-text-primary font-semibold text-base hover:border-accent-blue hover:text-accent-blue transition-colors duration-300">
+            <a
+              href="/resume.pdf"
+              download
+              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-white text-slate-700 font-semibold border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-colors shadow-sm"
+            >
               Download Resume
             </a>
           </motion.div>
-        </div>
 
-        {/* Right Side: Visual Graphic / Abstract Representation */}
-        <div className="relative hidden lg:flex items-center justify-center h-full min-h-[600px]">
+          {/* Social Links */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.3 }}
-            className="relative w-full max-w-[500px] aspect-square"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="flex items-center gap-4 pt-6"
           >
-            {/* Central glowing orb */}
-            <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-accent-blue via-accent-purple to-accent-pink opacity-20 blur-[60px] animate-pulse" />
-            
-            {/* Abstract geometric shape in center */}
-            <div className="absolute inset-16 rounded-3xl bg-white/40 backdrop-blur-2xl border border-white/50 shadow-2xl overflow-hidden flex flex-col">
-              <div className="h-10 border-b border-white/30 flex items-center px-4 gap-2 bg-white/20">
-                <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
-                <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
-                <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
-              </div>
-              <div className="flex-1 p-8 flex flex-col justify-center">
-                <div className="space-y-4">
-                  <div className="w-3/4 h-4 rounded-md bg-accent-blue/20" />
-                  <div className="w-1/2 h-4 rounded-md bg-accent-purple/20" />
-                  <div className="w-full h-4 rounded-md bg-accent-pink/20" />
-                  <div className="w-5/6 h-4 rounded-md bg-accent-green/20" />
-                  <div className="w-2/3 h-4 rounded-md bg-accent-blue/20" />
-                </div>
-              </div>
-            </div>
-
-            {/* Floating Tech Icons */}
-            <FloatingIcon delay={0.4} x="0%" y="10%" rotate={-10}>
-              <Layout size={32} className="text-accent-blue" />
-            </FloatingIcon>
-            
-            <FloatingIcon delay={0.6} x="80%" y="25%" rotate={15}>
-              <Code2 size={32} className="text-accent-purple" />
-            </FloatingIcon>
-            
-            <FloatingIcon delay={0.8} x="10%" y="75%" rotate={-5}>
-              <Database size={32} className="text-accent-pink" />
-            </FloatingIcon>
+            <a href="https://github.com/rajjaat250" target="_blank" rel="noreferrer" className="p-2.5 bg-white border border-slate-200 rounded-lg text-slate-600 hover:text-slate-900 hover:border-slate-300 transition-colors shadow-sm">
+              <GithubIcon size={20} />
+            </a>
+            <a href="https://www.linkedin.com/in/raj-chaudhary-15213630b" target="_blank" rel="noreferrer" className="p-2.5 bg-white border border-slate-200 rounded-lg text-slate-600 hover:text-[#0a66c2] hover:border-slate-300 transition-colors shadow-sm">
+              <LinkedinIcon size={20} />
+            </a>
+            <Link to="/contact" className="p-2.5 bg-white border border-slate-200 rounded-lg text-slate-600 hover:text-brand-600 hover:border-slate-300 transition-colors shadow-sm">
+              <Mail size={20} />
+            </Link>
           </motion.div>
         </div>
+
+        {/* Right Column: Visual Element */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.7, delay: 0.2 }}
+          className="hidden lg:block relative"
+        >
+          <div className="relative w-full aspect-square max-w-[500px] mx-auto">
+            {/* Main floating card */}
+            <motion.div
+              animate={{ y: [-10, 10, -10] }}
+              transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
+              className="absolute inset-0 bg-white border border-slate-200 rounded-3xl shadow-2xl overflow-hidden flex flex-col"
+            >
+              {/* Fake window header */}
+              <div className="h-12 bg-slate-50 border-b border-slate-100 flex items-center px-4 gap-2">
+                <div className="w-3 h-3 rounded-full bg-rose-400" />
+                <div className="w-3 h-3 rounded-full bg-amber-400" />
+                <div className="w-3 h-3 rounded-full bg-emerald-400" />
+              </div>
+              {/* Fake code content */}
+              <div className="flex-1 p-8 bg-slate-900 text-slate-300 font-mono text-sm leading-loose">
+                <p><span className="text-pink-400">const</span> developer = {'{'}</p>
+                <p className="ml-4">name: <span className="text-emerald-400">'Raj Chaudhary'</span>,</p>
+                <p className="ml-4">role: <span className="text-emerald-400">'Full Stack Engineer'</span>,</p>
+                <p className="ml-4">skills: [<span className="text-emerald-400">'React'</span>, <span className="text-emerald-400">'Django'</span>, <span className="text-emerald-400">'Python'</span>],</p>
+                <p className="ml-4">passionate: <span className="text-blue-400">true</span></p>
+                <p>{'}'};</p>
+                <br/>
+                <p><span className="text-pink-400">const</span> buildFuture = () <span className="text-pink-400">=&gt;</span> {'{'}</p>
+                <p className="ml-4">developer.code();</p>
+                <p>{'}'};</p>
+              </div>
+            </motion.div>
+
+            {/* Floating decoration 1 */}
+            <motion.div
+              animate={{ y: [10, -10, 10] }}
+              transition={{ repeat: Infinity, duration: 5, ease: "easeInOut", delay: 1 }}
+              className="absolute -right-8 -top-8 p-4 bg-white rounded-2xl shadow-xl border border-slate-100 text-slate-800 font-bold flex flex-col items-center gap-2"
+            >
+              <div className="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-6 h-6"><path strokeLinecap="round" strokeLinejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
+              </div>
+              <span>Clean Code</span>
+            </motion.div>
+
+            {/* Floating decoration 2 */}
+            <motion.div
+              animate={{ y: [-15, 15, -15] }}
+              transition={{ repeat: Infinity, duration: 7, ease: "easeInOut", delay: 2 }}
+              className="absolute -left-8 -bottom-8 p-4 bg-white rounded-2xl shadow-xl border border-slate-100 text-slate-800 font-bold flex flex-col items-center gap-2"
+            >
+               <div className="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-6 h-6"><path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+              </div>
+              <span>Performance</span>
+            </motion.div>
+          </div>
+        </motion.div>
       </div>
     </section>
   )

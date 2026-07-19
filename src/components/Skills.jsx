@@ -1,31 +1,15 @@
 import { motion } from 'framer-motion'
 import {
-
   Globe, Server, Wrench, Brain,
   FileCode, Database, GitBranch, Cpu,
   Monitor, Terminal, Cloud, Zap, Network, Shield,
 } from 'lucide-react'
 
-/*
-  Apple Bento Grid — 3-column asymmetric layout:
-
-  Desktop (md+):
-  ┌──────────────────────┬──────────┐
-  │  Frontend  (span 2)  │ Backend  │
-  ├──────────┬───────────────────────┤
-  │  Tools   │  CS Concepts (span 2) │
-  └──────────┴───────────────────────┘
-
-  Mobile: single column, natural order.
-*/
-
-const bento = [
+const skillCategories = [
   {
     id: 'languages',
     label: 'Languages',
     icon: FileCode,
-    accent: 'var(--accent-blue)',
-    span: 2,
     desc: 'Programming languages used to build software solutions.',
     skills: [
       { name: 'Python',       icon: Terminal },
@@ -36,24 +20,21 @@ const bento = [
     ],
   },
   {
-    id: 'backend',
+    id: 'frameworks',
     label: 'Frameworks',
     icon: Server,
-    accent: 'var(--accent-green)',
-    span: 1,
-    desc: 'Backend architectures and RESTful services.',
+    desc: 'Backend architectures and frontend libraries.',
     skills: [
       { name: 'Django',      icon: Server },
-      { name: 'DRF',         icon: Database },
+      { name: 'Django REST', icon: Database },
       { name: 'React.js',    icon: Globe },
+      { name: 'Tailwind CSS',icon: Globe },
     ],
   },
   {
     id: 'tools',
     label: 'Tools & Cloud',
     icon: Cloud,
-    accent: 'var(--accent-orange)',
-    span: 1,
     desc: 'Development, deployment, and cloud infrastructure.',
     skills: [
       { name: 'Git & GitHub', icon: GitBranch },
@@ -67,11 +48,9 @@ const bento = [
     ],
   },
   {
-    id: 'concepts',
+    id: 'coursework',
     label: 'Coursework',
     icon: Brain,
-    accent: 'var(--accent-purple)',
-    span: 2,
     desc: 'Academic foundations in computer science.',
     skills: [
       { name: 'Operating Systems',   icon: Cpu },
@@ -82,104 +61,69 @@ const bento = [
   },
 ]
 
-const containerVariants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.07 } },
-}
-
-const itemVariants = {
-  hidden:  { opacity: 0, y: 18 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
-}
-
-function BentoCard({ card }) {
-  const GroupIcon = card.icon
-  return (
-    <motion.div
-      variants={itemVariants}
-      className={`premium-card p-7 flex flex-col gap-6 ${
-        card.span === 2 ? 'md:col-span-2' : 'md:col-span-1'
-      }`}
-    >
-      {/* Icon + label + description */}
-      <div className="flex flex-col gap-3">
-        <div
-          className="w-10 h-10 rounded-2xl flex items-center justify-center border border-border-card bg-pill-bg shrink-0"
-        >
-          <GroupIcon size={18} style={{ color: card.accent }} />
-        </div>
-
-        <div>
-          <h3
-            className="text-[17px] font-semibold text-text-primary tracking-[-0.02em] mb-1"
-          >
-            {card.label}
-          </h3>
-          <p className="text-[13px] text-text-secondary leading-snug">
-            {card.desc}
-          </p>
-        </div>
-      </div>
-
-      {/* Skill pills — inherit full card width, wrap naturally */}
-      <div className="flex flex-wrap gap-2 mt-auto">
-        {card.skills.map((s) => (
-          <span
-            key={s.name}
-            className="px-3 py-1.5 rounded-full bg-pill-bg border border-pill-border text-[12px] font-medium text-text-secondary tracking-[-0.005em] whitespace-nowrap"
-          >
-            {s.name}
-          </span>
-        ))}
-      </div>
-    </motion.div>
-  )
-}
-
 export default function Skills() {
   return (
-    <div className="py-28 bg-bg-main relative overflow-hidden transition-colors duration-300 min-h-screen">
-      {/* Subtle ambient glow — left side */}
-      <div
-        className="absolute left-0 bottom-0 w-80 h-80 rounded-full pointer-events-none"
-        style={{
-          background: 'radial-gradient(ellipse at bottom-left, rgba(0,113,227,0.05) 0%, transparent 70%)',
-        }}
-        aria-hidden="true"
-      />
+    <div className="py-32 bg-white min-h-screen border-t border-slate-200">
+      <div className="section-container max-w-6xl">
 
-      <div className="section-container">
-
-        {/* ── Section header ─────────────────────────────── */}
+        {/* Section header */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="text-center mb-14"
+          transition={{ duration: 0.5 }}
+          className="text-center mb-20"
         >
-          <p className="text-[11px] font-semibold tracking-[0.1em] uppercase text-text-muted mb-4">
-            Tech Stack
-          </p>
-          <h2 className="text-4xl md:text-5xl font-bold text-text-primary tracking-[-0.03em] mb-4">
-            Skills & Expertise
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-50 border border-brand-100 mb-6">
+            <span className="text-xs font-bold tracking-widest uppercase text-brand-700">Tech Stack</span>
+          </div>
+          <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-4">
+            Skills & <span className="text-brand-600">Expertise</span>
           </h2>
-          <p className="text-[15px] text-text-secondary max-w-xs mx-auto leading-relaxed">
-            Technologies and engineering concepts I use to build
-            scalable, maintainable applications.
+          <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
+            Technologies and engineering concepts I use to build scalable, maintainable applications.
           </p>
         </motion.div>
 
-        {/* ── Bento grid ─────────────────────────────────── */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="grid grid-cols-1 md:grid-cols-3 gap-4"
-        >
-          {bento.map((card) => (
-            <BentoCard key={card.id} card={card} />
+        {/* Grid Layout */}
+        <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
+          {skillCategories.map((category, idx) => (
+            <motion.div
+              key={category.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: idx * 0.1 }}
+              className="modern-card p-8 flex flex-col h-full"
+            >
+              <div className="flex items-start gap-4 mb-6">
+                <div className="w-12 h-12 rounded-xl bg-slate-50 flex items-center justify-center shrink-0 border border-slate-200 text-brand-600">
+                  <category.icon size={24} />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-slate-900 mb-1">
+                    {category.label}
+                  </h3>
+                  <p className="text-sm text-slate-600 leading-snug">
+                    {category.desc}
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-auto pt-6 border-t border-slate-100">
+                <div className="flex flex-wrap gap-2.5">
+                  {category.skills.map((s) => (
+                    <div
+                      key={s.name}
+                      className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-50 border border-slate-200 text-sm font-medium text-slate-700"
+                    >
+                      <s.icon size={14} className="text-slate-400" />
+                      {s.name}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </div>
   )

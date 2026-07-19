@@ -1,9 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
-import { useState, useEffect, useRef } from 'react'
-import { Award, ImageOff, X, ExternalLink } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { Award, X, ExternalLink } from 'lucide-react'
 
-// Add your certificate images to public/images/certificates/
-// Name them cert1.jpg, cert2.jpg, etc. OR update the list below.
 const certificates = [
   { id: 1, title: 'Web Development Internship', issuer: 'Cognifyz Technologies', src: '/images/certificates/cognifyz.png' },
   { id: 2, title: 'Introduction to Cyber Security', issuer: 'Infosys Springboard', src: '/images/certificates/infoysescybersecurity.png' },
@@ -11,119 +9,73 @@ const certificates = [
   { id: 4, title: 'Software Engineering Job Simulation', issuer: 'JPMorgan Chase & Co.', src: '/images/certificates/jpmorganforage.png' },
 ]
 
-// Duplicate for seamless infinite loop
-const doubled = [...certificates, ...certificates]
-
-function CertCard({ cert, onClick }) {
-  return (
-    <div
-      onClick={onClick}
-      className="flex-shrink-0 w-72 md:w-80 premium-card overflow-hidden cursor-pointer select-none"
-    >
-      {/* Image */}
-      <div className="relative w-full h-48 bg-pill-bg overflow-hidden border-b border-border-card">
-        <img
-          src={cert.src}
-          alt={cert.title}
-          onError={(e) => {
-            e.target.style.display = 'none'
-            e.target.nextSibling.style.display = 'flex'
-          }}
-          className="w-full h-full object-cover"
-          draggable={false}
-        />
-        <div
-          className="absolute inset-0 items-center justify-center flex-col gap-2 bg-pill-bg hidden border border-border-card"
-        >
-          <ImageOff size={28} className="text-text-secondary/40" />
-          <span className="text-[11px] text-text-secondary font-semibold text-center px-4">
-            Add image to<br />public/images/certificates/
-          </span>
-        </div>
-      </div>
-
-      {/* Info */}
-      <div className="p-5">
-        <div className="flex items-start gap-3">
-          <div className="w-8 h-8 rounded-xl bg-pill-bg border border-border-card flex items-center justify-center flex-shrink-0 mt-0.5">
-            <Award size={14} className="text-accent-blue" />
-          </div>
-          <div>
-            <h4 className="text-[14px] font-bold text-text-primary leading-snug">{cert.title}</h4>
-            <p className="text-[12px] text-text-secondary mt-0.5 font-medium">{cert.issuer}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
 export default function Certificates() {
   const [selectedCert, setSelectedCert] = useState(null)
 
   useEffect(() => {
-    if (selectedCert) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = ''
-    }
-    return () => {
-      document.body.style.overflow = ''
-    }
+    if (selectedCert) document.body.style.overflow = 'hidden'
+    else document.body.style.overflow = ''
+    return () => { document.body.style.overflow = '' }
   }, [selectedCert])
 
   return (
-    <div className="py-28 bg-bg-section overflow-hidden relative transition-colors duration-300 min-h-screen"
-      style={{ borderTop: '1px solid var(--border-card)' }}
-    >
-      {/* Decorative background glow */}
-      <div className="absolute left-0 bottom-1/3 w-[300px] h-[300px] bg-accent-blue/5 rounded-full blur-[100px] pointer-events-none" />
-
-      <div className="section-container">
+    <div className="py-32 bg-slate-50 min-h-screen">
+      <div className="section-container max-w-6xl">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="text-center mb-12"
+          transition={{ duration: 0.5 }}
+          className="text-center mb-20"
         >
-          <p className="text-[11px] font-semibold tracking-[0.1em] uppercase text-text-muted mb-4">
-            Certificates
-          </p>
-          <h2 className="text-4xl md:text-5xl font-bold text-text-primary tracking-[-0.03em] mb-4">
-            Achievements & Certifications
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-50 border border-brand-100 mb-6">
+            <Award size={16} className="text-brand-600" />
+            <span className="text-xs font-bold tracking-widest uppercase text-brand-700">Achievements</span>
+          </div>
+          <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-6">
+            Licenses & <span className="text-brand-600">Certifications</span>
           </h2>
-          <p className="text-[15px] text-text-secondary max-w-xs mx-auto leading-relaxed">
-            Credentials earned through learning, internships, and hands-on contributions.
+          <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
+            Professional credentials validating my expertise in software development, cybersecurity, and problem-solving.
           </p>
         </motion.div>
-      </div>
 
-
-      {/* Carousel */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.3, duration: 0.6 }}
-        className="carousel-wrapper"
-      >
-        <div className="carousel-track py-4 px-6">
-          {doubled.map((cert, i) => (
-            <CertCard
-              key={`${cert.id}-${i}`}
-              cert={cert}
+        {/* Certificates Grid */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-2 gap-8">
+          {certificates.map((cert, idx) => (
+            <motion.div
+              key={cert.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: idx * 0.1 }}
               onClick={() => setSelectedCert(cert)}
-            />
+              className="group cursor-pointer bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl hover:border-brand-200 transition-all duration-300 flex flex-col"
+            >
+              {/* Image Container */}
+              <div className="relative w-full aspect-[4/3] bg-slate-100 overflow-hidden border-b border-slate-200 p-4 flex items-center justify-center">
+                <img
+                  src={cert.src}
+                  alt={cert.title}
+                  className="w-full h-full object-contain filter drop-shadow-md transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/5 transition-colors duration-300" />
+              </div>
+
+              {/* Content */}
+              <div className="p-6">
+                <h3 className="text-xl font-bold text-slate-900 mb-2 leading-snug group-hover:text-brand-600 transition-colors">
+                  {cert.title}
+                </h3>
+                <p className="text-slate-600 font-medium">
+                  {cert.issuer}
+                </p>
+              </div>
+            </motion.div>
           ))}
         </div>
-      </motion.div>
+      </div>
 
-      {/* Hint */}
-      <p className="text-center mt-8 text-[12px] text-text-muted px-6 font-medium">
-        Click on any certificate to inspect details · Hover to pause
-      </p>
-
-      {/* Modal / Mini Window */}
+      {/* Modal */}
       <AnimatePresence>
         {selectedCert && (
           <motion.div
@@ -131,63 +83,48 @@ export default function Certificates() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setSelectedCert(null)}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md cursor-zoom-out"
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/90 backdrop-blur-sm cursor-zoom-out"
           >
             <motion.div
-              initial={{ scale: 0.95, y: 15 }}
+              initial={{ scale: 0.95, y: 10 }}
               animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.95, y: 15 }}
-              transition={{ type: 'spring', damping: 25, stiffness: 350 }}
+              exit={{ scale: 0.95, y: 10 }}
               onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-2xl bg-bg-card border border-border-card rounded-3xl overflow-hidden shadow-2xl backdrop-blur-xl flex flex-col cursor-default"
+              className="relative w-full max-w-4xl bg-white rounded-2xl overflow-hidden shadow-2xl flex flex-col cursor-default"
             >
-              {/* Close Button */}
               <button
                 onClick={() => setSelectedCert(null)}
-                className="absolute top-4 right-4 z-10 p-2 rounded-xl bg-black/25 text-white hover:bg-black/40 transition-colors cursor-pointer flex items-center justify-center border border-white/10"
-                aria-label="Close modal"
+                className="absolute top-4 right-4 z-10 p-2 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors"
               >
-                <X size={18} />
+                <X size={20} />
               </button>
 
-              {/* Certificate Image Frame */}
-              <div className="relative w-full aspect-[4/3] bg-black/10 flex items-center justify-center overflow-hidden border-b border-border-card">
+              <div className="relative w-full aspect-auto md:aspect-[4/3] max-h-[70vh] bg-slate-100 p-4 md:p-8 flex items-center justify-center border-b border-slate-200">
                 <img
                   src={selectedCert.src}
                   alt={selectedCert.title}
-                  onError={(e) => {
-                    e.target.style.display = 'none'
-                    e.target.nextSibling.style.display = 'flex'
-                  }}
-                  className="w-full h-full object-contain max-h-[70vh]"
+                  className="max-w-full max-h-full object-contain filter drop-shadow-xl"
                 />
-                {/* Fallback frame */}
-                <div className="absolute inset-0 items-center justify-center flex-col gap-3 bg-bg-card hidden">
-                  <ImageOff size={48} className="text-text-secondary/30" />
-                  <span className="text-[14px] text-text-secondary font-semibold text-center px-6">
-                    Certificate Image not found
-                  </span>
-                </div>
               </div>
 
-              {/* Metadata Info Footer */}
-              <div className="p-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-bg-card/90 backdrop-blur-md">
+              <div className="p-6 md:p-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div>
-                  <h3 className="text-[16px] font-bold text-text-primary leading-tight capitalize">
+                  <h3 className="text-2xl font-bold text-slate-900 mb-1">
                     {selectedCert.title}
                   </h3>
-                  <p className="text-[14px] text-text-secondary mt-1 font-medium">
-                    Issued by: <span className="text-accent-blue font-semibold">{selectedCert.issuer}</span>
+                  <p className="text-slate-600 font-medium">
+                    Issued by <span className="text-brand-600 font-bold">{selectedCert.issuer}</span>
                   </p>
                 </div>
+                
                 <a
                   href={selectedCert.src}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-pill-bg text-text-primary text-[13px] font-semibold hover:bg-pill-bg/80 active:scale-95 transition-all duration-200 border border-pill-border cursor-pointer self-stretch sm:self-auto text-center justify-center"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-slate-900 text-white font-semibold hover:bg-brand-600 transition-colors shrink-0"
                 >
-                  <ExternalLink size={14} />
-                  Open Full File
+                  <ExternalLink size={18} />
+                  Open Image
                 </a>
               </div>
             </motion.div>

@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion'
-import { useRef, useState, useEffect } from 'react'
-import { ExternalLink, Layers, X, ChevronLeft, ChevronRight, Image as ImageIcon } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { ExternalLink, X, ChevronLeft, ChevronRight } from 'lucide-react'
 import GithubIcon from './GithubIcon'
 
 const projects = [
@@ -79,194 +79,137 @@ const projects = [
 ]
 
 export default function Projects() {
-  // Modal State
   const [activeProject, setActiveProject] = useState(null)
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
   useEffect(() => {
-    if (activeProject) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = ''
-    }
-    return () => {
-      document.body.style.overflow = ''
-    }
+    if (activeProject) document.body.style.overflow = 'hidden'
+    else document.body.style.overflow = ''
+    return () => { document.body.style.overflow = '' }
   }, [activeProject])
 
   const nextImage = (e) => {
     e.stopPropagation()
-    if (activeProject && activeProject.gallery) {
-      setCurrentImageIndex((prev) => (prev + 1) % activeProject.gallery.length)
-    }
+    if (activeProject?.gallery) setCurrentImageIndex((prev) => (prev + 1) % activeProject.gallery.length)
   }
 
   const prevImage = (e) => {
     e.stopPropagation()
-    if (activeProject && activeProject.gallery) {
-      setCurrentImageIndex((prev) => (prev - 1 + activeProject.gallery.length) % activeProject.gallery.length)
-    }
+    if (activeProject?.gallery) setCurrentImageIndex((prev) => (prev - 1 + activeProject.gallery.length) % activeProject.gallery.length)
   }
 
   const openGallery = (project) => {
-    if (project.gallery && project.gallery.length > 0) {
+    if (project.gallery?.length) {
       setActiveProject(project)
       setCurrentImageIndex(0)
     }
   }
 
   return (
-    <div className="py-28 bg-bg-main relative overflow-hidden transition-colors duration-300 min-h-screen">
-      <div className="section-container">
-
+    <div className="py-32 bg-slate-50 min-h-screen">
+      <div className="section-container max-w-6xl">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="text-center mb-14"
+          transition={{ duration: 0.5 }}
+          className="text-center mb-20"
         >
-          <p className="text-[11px] font-semibold tracking-[0.1em] uppercase text-text-muted mb-4">
-            Projects
-          </p>
-          <h2 className="text-4xl md:text-5xl font-bold text-text-primary tracking-[-0.03em] mb-4">
-            Featured Work
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-50 border border-brand-100 mb-6">
+            <span className="text-xs font-bold tracking-widest uppercase text-brand-700">Portfolio</span>
+          </div>
+          <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-6">
+            Featured <span className="text-brand-600">Projects</span>
           </h2>
-          <p className="text-[15px] text-text-secondary max-w-xs mx-auto leading-relaxed">
-            A platform built with clean, maintainable full-stack architecture.
+          <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
+            Real-world applications built with modern architectures, focusing on performance, scalability, and exceptional user experience.
           </p>
         </motion.div>
 
-        {/* Project card(s) */}
-        {projects.map((project, i) => (
-          <motion.div
-            key={project.title}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.65, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
-            className="premium-card overflow-hidden w-full"
-          >
-            {/* Screenshot banner */}
-            <div 
-              className="relative w-full aspect-video bg-pill-bg overflow-hidden group cursor-pointer"
-              style={{ borderBottom: '1px solid var(--border-card)' }}
-              onClick={() => openGallery(project)}
+        {/* Projects List */}
+        <div className="flex flex-col gap-16 md:gap-24">
+          {projects.map((project, i) => (
+            <motion.div
+              key={project.title}
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: i * 0.1 }}
+              className={`flex flex-col gap-8 md:gap-12 items-center ${i % 2 === 1 ? 'md:flex-row-reverse' : 'md:flex-row'}`}
             >
-              <img
-                src={project.image}
-                alt={project.title}
-                onError={(e) => {
-                  e.target.style.display = 'none'
-                  e.target.nextSibling.style.display = 'flex'
-                }}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
-              />
-              <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-bg-section">
-                <Layers size={22} className="text-text-muted" />
-                <span className="text-[11px] text-text-muted font-medium text-center leading-normal">
-                  Add screenshot to<br />public{project.image}
+              {/* Image Side */}
+              <div 
+                className="w-full md:w-1/2 relative group cursor-pointer"
+                onClick={() => openGallery(project)}
+              >
+                <div className="absolute inset-0 bg-brand-500 rounded-2xl transform translate-x-3 translate-y-3 opacity-20 transition-transform group-hover:translate-x-4 group-hover:translate-y-4" />
+                <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-lg border border-slate-200 bg-white">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.03]"
+                  />
+                  <div className="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/10 transition-colors duration-300 flex items-center justify-center">
+                    <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 px-4 py-2 bg-white text-slate-900 rounded-full text-sm font-semibold shadow-xl">
+                      View Gallery
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Content Side */}
+              <div className="w-full md:w-1/2 flex flex-col items-start">
+                <span className="text-brand-600 font-bold tracking-wider text-sm uppercase mb-2">
+                  {project.subtitle}
                 </span>
-              </div>
-              
-              {/* Overlay for gallery */}
-              {project.gallery && project.gallery.length > 0 && (
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                   <div className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white text-[13px] font-semibold tracking-wide">
-                     <ImageIcon size={16} />
-                     View Gallery ({project.gallery.length})
-                   </div>
+                <h3 className="text-3xl font-extrabold text-slate-900 tracking-tight mb-4">
+                  {project.title}
+                </h3>
+                
+                <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm mb-6 relative">
+                  <p className="text-slate-600 leading-relaxed">
+                    {project.solution}
+                  </p>
                 </div>
-              )}
-            </div>
 
-            {/* Body */}
-            <div className="p-6 md:p-9 flex flex-col gap-7">
-
-              {/* Title — centred */}
-              <div className="text-center">
-                <div className="flex flex-wrap items-center justify-center gap-2.5 mb-1">
-                  <h3 className="text-2xl md:text-3xl font-bold text-text-primary tracking-[-0.03em]">
-                    {project.title}
-                  </h3>
-                  <span className="px-3 py-0.5 rounded-full bg-pill-bg border border-pill-border text-[11px] font-semibold text-text-secondary tracking-[-0.005em]">
-                    {project.subtitle}
-                  </span>
-                </div>
-                <p className="text-[11px] font-semibold text-text-muted tracking-[0.08em] uppercase">
-                  {project.role}
-                </p>
-              </div>
-
-              {/* Challenge / Solution / Impact */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                {[
-                  { label: 'Challenge', text: project.problem  },
-                  { label: 'Solution',  text: project.solution },
-                  { label: 'Impact',    text: project.impact   },
-                ].map(({ label, text }) => (
-                  <div key={label} className="rounded-2xl bg-bg-section p-5"
-                    style={{ border: '1px solid var(--border-card)' }}
-                  >
-                    <p className="text-[10px] font-bold tracking-[0.1em] uppercase text-text-muted mb-2">
-                      {label}
-                    </p>
-                    <p className="text-[13px] text-text-secondary leading-relaxed">{text}</p>
-                  </div>
-                ))}
-              </div>
-
-              {/* Highlights */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                {project.features.map((f, idx) => (
-                  <div key={idx} className="flex items-start gap-2.5 text-[13px] text-text-secondary leading-snug">
+                <div className="flex flex-wrap gap-2 mb-8">
+                  {project.tech.map((tech) => (
                     <span
-                      className="mt-[5px] w-1 h-1 rounded-full shrink-0 bg-accent-blue"
-                    />
-                    {f}
-                  </div>
-                ))}
-              </div>
+                      key={tech}
+                      className="px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-semibold"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
 
-              {/* Tech pills — centred */}
-              <div className="flex flex-wrap justify-center gap-2">
-                {project.tech.map((t) => (
-                  <span
-                    key={t}
-                    className="px-3 py-1.5 rounded-full bg-pill-bg border border-pill-border text-[11px] font-medium text-text-secondary tracking-[-0.005em]"
-                  >
-                    {t}
-                  </span>
-                ))}
+                <div className="flex items-center gap-4">
+                  {project.github && (
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-slate-900 text-white text-sm font-semibold hover:bg-brand-600 transition-colors"
+                    >
+                      <GithubIcon size={18} />
+                      Code
+                    </a>
+                  )}
+                  {project.live && (
+                    <a
+                      href={project.live}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-white border border-slate-200 text-slate-700 text-sm font-semibold hover:border-slate-300 hover:bg-slate-50 transition-colors"
+                    >
+                      <ExternalLink size={18} />
+                      Live Demo
+                    </a>
+                  )}
+                </div>
               </div>
-
-              {/* CTAs — centred, Apple pattern */}
-              <div className="flex flex-wrap items-center justify-center gap-4">
-                {project.github && (
-                  <a
-                    href={project.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-text-primary text-bg-main text-[13px] font-semibold hover:opacity-80 transition-opacity"
-                  >
-                    <GithubIcon size={14} />
-                    View on GitHub
-                  </a>
-                )}
-                {project.live && (
-                  <a
-                    href={project.live}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[14px] font-medium text-accent-blue hover:underline underline-offset-2 flex items-center gap-1.5"
-                  >
-                    <ExternalLink size={13} />
-                    Live Demo&nbsp;→
-                  </a>
-                )}
-              </div>
-            </div>
-          </motion.div>
-        ))}
+            </motion.div>
+          ))}
+        </div>
       </div>
 
       {/* Gallery Modal */}
@@ -276,57 +219,44 @@ export default function Projects() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 md:p-12 cursor-zoom-out"
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/90 backdrop-blur-md p-4 md:p-8 cursor-zoom-out"
             onClick={() => setActiveProject(null)}
           >
             <button
               onClick={() => setActiveProject(null)}
-              className="absolute top-6 right-6 md:top-8 md:right-8 z-50 p-2 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
+              className="absolute top-4 right-4 md:top-8 md:right-8 z-50 p-2.5 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
             >
               <X size={24} />
             </button>
 
             <motion.div
-              initial={{ scale: 0.95, opacity: 0, y: 10 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.95, opacity: 0, y: 10 }}
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
               transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-              className="relative w-full max-w-6xl aspect-[16/9] md:aspect-auto md:h-[85vh] bg-black rounded-xl overflow-hidden shadow-2xl flex flex-col cursor-default"
+              className="relative w-full max-w-6xl h-auto max-h-[90vh] bg-slate-950 rounded-2xl overflow-hidden shadow-2xl flex flex-col cursor-default"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Main Image Viewer */}
-              <div className="relative flex-grow flex items-center justify-center overflow-hidden bg-bg-card/20 group">
+              {/* Main Image */}
+              <div className="relative flex-1 flex items-center justify-center overflow-hidden bg-slate-900 group">
                 <img
-                  key={currentImageIndex} // forces re-render for smooth transition or handled by motion if we want
+                  key={currentImageIndex}
                   src={activeProject.gallery[currentImageIndex]}
                   alt={`${activeProject.title} screenshot ${currentImageIndex + 1}`}
-                  onError={(e) => {
-                    e.target.style.display = 'none'
-                    e.target.nextSibling.style.display = 'flex'
-                  }}
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-contain p-2"
                 />
                 
-                {/* Fallback for missing image */}
-                <div className="absolute inset-0 hidden flex-col items-center justify-center gap-3 bg-bg-card border border-border-card">
-                  <Layers size={32} className="text-text-muted" />
-                  <span className="text-[12px] text-text-muted font-medium text-center">
-                    Image missing at<br />public{activeProject.gallery[currentImageIndex]}
-                  </span>
-                </div>
-
-                {/* Left/Right Controls */}
                 {activeProject.gallery.length > 1 && (
                   <>
                     <button
                       onClick={prevImage}
-                      className="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/50 backdrop-blur-sm border border-white/10 text-white hover:bg-black/80 transition-colors opacity-0 group-hover:opacity-100 disabled:opacity-0"
+                      className="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/50 border border-white/10 text-white hover:bg-brand-600 transition-colors opacity-0 group-hover:opacity-100"
                     >
                       <ChevronLeft size={24} />
                     </button>
                     <button
                       onClick={nextImage}
-                      className="absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/50 backdrop-blur-sm border border-white/10 text-white hover:bg-black/80 transition-colors opacity-0 group-hover:opacity-100 disabled:opacity-0"
+                      className="absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/50 border border-white/10 text-white hover:bg-brand-600 transition-colors opacity-0 group-hover:opacity-100"
                     >
                       <ChevronRight size={24} />
                     </button>
@@ -334,15 +264,15 @@ export default function Projects() {
                 )}
               </div>
 
-              {/* Thumbnails Footer */}
+              {/* Thumbnails */}
               {activeProject.gallery.length > 1 && (
-                <div className="h-24 md:h-28 bg-bg-main border-t border-border-card p-3 flex gap-3 overflow-x-auto items-center justify-start hide-scrollbar shrink-0">
+                <div className="h-24 md:h-32 bg-slate-950 border-t border-white/10 p-4 flex gap-3 overflow-x-auto items-center justify-start hide-scrollbar shrink-0">
                   {activeProject.gallery.map((img, idx) => (
                     <button
                       key={idx}
                       onClick={() => setCurrentImageIndex(idx)}
-                      className={`relative h-full aspect-video rounded-md overflow-hidden shrink-0 border-2 transition-all ${
-                        idx === currentImageIndex ? 'border-accent-blue opacity-100' : 'border-transparent opacity-50 hover:opacity-100'
+                      className={`relative h-full aspect-video rounded-lg overflow-hidden shrink-0 border-2 transition-all ${
+                        idx === currentImageIndex ? 'border-brand-500 opacity-100' : 'border-transparent opacity-50 hover:opacity-100'
                       }`}
                     >
                       <img src={img} alt={`Thumbnail ${idx+1}`} className="w-full h-full object-cover pointer-events-none" />
