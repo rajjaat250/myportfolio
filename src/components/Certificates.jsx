@@ -1,4 +1,4 @@
-import { motion, useInView, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect, useRef } from 'react'
 import { Award, ImageOff, X, ExternalLink } from 'lucide-react'
 
@@ -59,8 +59,6 @@ function CertCard({ cert, onClick }) {
 }
 
 export default function Certificates() {
-  const ref = useRef(null)
-  const inView = useInView(ref, { once: true, margin: '-60px' })
   const [selectedCert, setSelectedCert] = useState(null)
 
   useEffect(() => {
@@ -75,17 +73,17 @@ export default function Certificates() {
   }, [selectedCert])
 
   return (
-    <section id="certificates" className="py-28 bg-bg-section overflow-hidden relative transition-colors duration-300"
+    <div className="py-28 bg-bg-section overflow-hidden relative transition-colors duration-300 min-h-screen"
       style={{ borderTop: '1px solid var(--border-card)' }}
     >
       {/* Decorative background glow */}
       <div className="absolute left-0 bottom-1/3 w-[300px] h-[300px] bg-accent-blue/5 rounded-full blur-[100px] pointer-events-none" />
 
-      <div className="section-container" ref={ref}>
+      <div className="section-container">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="text-center mb-12"
         >
@@ -105,7 +103,7 @@ export default function Certificates() {
       {/* Carousel */}
       <motion.div
         initial={{ opacity: 0 }}
-        animate={inView ? { opacity: 1 } : {}}
+        animate={{ opacity: 1 }}
         transition={{ delay: 0.3, duration: 0.6 }}
         className="carousel-wrapper"
       >
@@ -196,6 +194,6 @@ export default function Certificates() {
           </motion.div>
         )}
       </AnimatePresence>
-    </section>
+    </div>
   )
 }

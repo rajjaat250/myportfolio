@@ -1,4 +1,4 @@
-import { motion, useInView, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useRef, useState, useEffect } from 'react'
 import emailjs from '@emailjs/browser'
 import { Mail, MapPin, Send } from 'lucide-react'
@@ -83,9 +83,7 @@ function FloatField({ type = 'text', name, id, label, value, onChange, rows }) {
 }
 
 export default function Contact() {
-  const ref     = useRef(null)
   const formRef = useRef(null)
-  const inView  = useInView(ref, { once: true, margin: '-80px' })
 
   const [form,   setForm]   = useState({ name: '', email: '', message: '' })
   const [status, setStatus] = useState('idle') // idle | sending | success | error
@@ -134,10 +132,7 @@ export default function Contact() {
   }
 
   return (
-    <section
-      id="contact"
-      className="py-28 bg-bg-main relative overflow-hidden transition-colors duration-300"
-    >
+    <div className="py-28 bg-bg-main relative overflow-hidden transition-colors duration-300 min-h-screen">
       {/* iOS Toast Mount point */}
       <AnimatePresence>
         {toast && (
@@ -163,12 +158,12 @@ export default function Contact() {
         />
       </div>
 
-      <div className="section-container relative z-10" ref={ref}>
+      <div className="section-container relative z-10">
 
         {/* ── Header ────────────────────────────────────── */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="text-center mb-14"
         >
@@ -187,7 +182,7 @@ export default function Contact() {
         {/* Two-column Apple Support-style layout */}
         <motion.div
           initial={{ opacity: 0, y: 22 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.65, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start"
         >
@@ -409,6 +404,6 @@ export default function Contact() {
           </div>
         </motion.div>
       </div>
-    </section>
+    </div>
   )
 }

@@ -1,4 +1,4 @@
-import { motion, useInView, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useRef, useState, useEffect } from 'react'
 import { ExternalLink, Layers, X, ChevronLeft, ChevronRight, Image as ImageIcon } from 'lucide-react'
 import GithubIcon from './GithubIcon'
@@ -69,18 +69,17 @@ const projects = [
     ],
     github: '',
     live:   'https://stakegameclone.vercel.app/',
-    image:  '/images/projects/stakeclone-1.jpg',
+    image:  '/images/projects/stake-1.png',
     gallery: [
-      '/images/projects/stakeclone-1.jpg',
-      '/images/projects/stakeclone-2.jpg',
+      '/images/projects/stake-1.png',
+      '/images/projects/stake-2.png',
+      '/images/projects/stake-3.png',
+      '/images/projects/stake-4.png',
     ],
   },
 ]
 
 export default function Projects() {
-  const ref    = useRef(null)
-  const inView = useInView(ref, { once: true, margin: '-80px' })
-
   // Modal State
   const [activeProject, setActiveProject] = useState(null)
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
@@ -118,16 +117,13 @@ export default function Projects() {
   }
 
   return (
-    <section
-      id="projects"
-      className="py-28 bg-bg-main relative overflow-hidden transition-colors duration-300"
-    >
-      <div className="section-container" ref={ref}>
+    <div className="py-28 bg-bg-main relative overflow-hidden transition-colors duration-300 min-h-screen">
+      <div className="section-container">
 
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="text-center mb-14"
         >
@@ -147,7 +143,7 @@ export default function Projects() {
           <motion.div
             key={project.title}
             initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.65, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
             className="premium-card overflow-hidden w-full"
           >
@@ -359,6 +355,6 @@ export default function Projects() {
           </motion.div>
         )}
       </AnimatePresence>
-    </section>
+    </div>
   )
 }

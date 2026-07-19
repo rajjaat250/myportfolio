@@ -1,6 +1,6 @@
-import { motion, useInView } from 'framer-motion'
-import { useRef } from 'react'
+import { motion } from 'framer-motion'
 import {
+
   Globe, Server, Wrench, Brain,
   FileCode, Database, GitBranch, Cpu,
   Monitor, Terminal, Cloud, Zap, Network, Shield,
@@ -21,59 +21,63 @@ import {
 
 const bento = [
   {
-    id: 'frontend',
-    label: 'Frontend',
-    icon: Globe,
+    id: 'languages',
+    label: 'Languages',
+    icon: FileCode,
     accent: 'var(--accent-blue)',
-    span: 2,              // col-span-2 on md+
-    desc: 'Building interactive, accessible interfaces with modern web technologies.',
+    span: 2,
+    desc: 'Programming languages used to build software solutions.',
     skills: [
-      { name: 'React.js',       icon: FileCode },
-      { name: 'JavaScript ES6+',icon: FileCode },
-      { name: 'Tailwind CSS',   icon: Zap      },
-      { name: 'HTML5 & CSS3',   icon: Globe    },
+      { name: 'Python',       icon: Terminal },
+      { name: 'C/C++',        icon: FileCode },
+      { name: 'JavaScript',   icon: FileCode },
+      { name: 'HTML/CSS',     icon: Globe },
+      { name: 'Bash',         icon: Terminal },
     ],
   },
   {
     id: 'backend',
-    label: 'Backend',
+    label: 'Frameworks',
     icon: Server,
     accent: 'var(--accent-green)',
     span: 1,
-    desc: 'Scalable APIs, data models, and server-side logic.',
+    desc: 'Backend architectures and RESTful services.',
     skills: [
-      { name: 'Django',      icon: Server   },
-      { name: 'Python',      icon: Terminal },
-      { name: 'DRF & SQL',   icon: Database },
-      { name: 'REST APIs',   icon: Database },
+      { name: 'Django',      icon: Server },
+      { name: 'DRF',         icon: Database },
+      { name: 'React.js',    icon: Globe },
     ],
   },
   {
     id: 'tools',
-    label: 'Tools & DevOps',
-    icon: Wrench,
+    label: 'Tools & Cloud',
+    icon: Cloud,
     accent: 'var(--accent-orange)',
     span: 1,
-    desc: 'Development workflow and deployment pipelines.',
+    desc: 'Development, deployment, and cloud infrastructure.',
     skills: [
       { name: 'Git & GitHub', icon: GitBranch },
-      { name: 'Firebase',     icon: Cloud     },
-      { name: 'AI Studio',    icon: Brain     },
-      { name: 'Vercel',       icon: Cloud     },
+      { name: 'Firebase',     icon: Cloud },
+      { name: 'AWS (S3)',     icon: Cloud },
+      { name: 'Supabase',     icon: Database },
+      { name: 'Docker',       icon: Wrench },
+      { name: 'Linux',        icon: Terminal },
+      { name: 'Postman',      icon: Zap },
+      { name: 'Vercel',       icon: Cloud },
     ],
   },
   {
     id: 'concepts',
-    label: 'CS Concepts',
+    label: 'Coursework',
     icon: Brain,
     accent: 'var(--accent-purple)',
     span: 2,
-    desc: 'Strong theoretical foundation across core computer science disciplines.',
+    desc: 'Academic foundations in computer science.',
     skills: [
-      { name: 'Object-Oriented Programming', icon: Brain   },
-      { name: 'Operating Systems',           icon: Cpu     },
-      { name: 'Computer Networks',           icon: Network },
-      { name: 'Cyber Security',              icon: Shield  },
+      { name: 'Operating Systems',   icon: Cpu },
+      { name: 'Computer Networks',   icon: Network },
+      { name: 'DBMS',                icon: Database },
+      { name: 'OOP',                 icon: Brain },
     ],
   },
 ]
@@ -133,14 +137,8 @@ function BentoCard({ card }) {
 }
 
 export default function Skills() {
-  const ref    = useRef(null)
-  const inView = useInView(ref, { once: true, margin: '-80px' })
-
   return (
-    <section
-      id="skills"
-      className="py-28 bg-bg-main relative overflow-hidden transition-colors duration-300"
-    >
+    <div className="py-28 bg-bg-main relative overflow-hidden transition-colors duration-300 min-h-screen">
       {/* Subtle ambient glow — left side */}
       <div
         className="absolute left-0 bottom-0 w-80 h-80 rounded-full pointer-events-none"
@@ -150,12 +148,12 @@ export default function Skills() {
         aria-hidden="true"
       />
 
-      <div className="section-container" ref={ref}>
+      <div className="section-container">
 
         {/* ── Section header ─────────────────────────────── */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="text-center mb-14"
         >
@@ -175,7 +173,7 @@ export default function Skills() {
         <motion.div
           variants={containerVariants}
           initial="hidden"
-          animate={inView ? 'visible' : 'hidden'}
+          animate="visible"
           className="grid grid-cols-1 md:grid-cols-3 gap-4"
         >
           {bento.map((card) => (
@@ -183,6 +181,6 @@ export default function Skills() {
           ))}
         </motion.div>
       </div>
-    </section>
+    </div>
   )
 }

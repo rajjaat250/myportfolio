@@ -4,11 +4,11 @@
 /* ─── Design Tokens ──────────────────────────────────────── */
 
 :root {
-  /* Surfaces - Light mode */
-  --bg-main:        #fafafa;
+  /* Surfaces - Premium Light Mode Only */
+  --bg-main:        #fdfdfd;
   --bg-section:     #f4f5f8;
-  --bg-card:        rgba(255, 255, 255, 0.85);
-  --border-card:    rgba(0, 0, 0, 0.05);
+  --bg-card:        rgba(255, 255, 255, 0.9);
+  --border-card:    rgba(0, 0, 0, 0.08);
 
   /* Typography */
   --text-primary:   #0f172a;
@@ -23,42 +23,14 @@
   --accent-pink:    #ec4899;
 
   /* Shadows */
-  --card-shadow:    0 10px 30px -10px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.05);
+  --card-shadow:    0 12px 32px -10px rgba(0,0,0,0.06), 0 4px 10px -4px rgba(0,0,0,0.04);
 
   /* UI chrome */
-  --header-bg:      rgba(255, 255, 255, 0.7);
-  --pill-bg:        rgba(0, 0, 0, 0.05);
+  --header-bg:      rgba(255, 255, 255, 0.85);
+  --pill-bg:        rgba(0, 0, 0, 0.04);
   --pill-border:    rgba(0, 0, 0, 0.08);
   --input-bg:       rgba(0, 0, 0, 0.03);
   --input-border:   rgba(0, 0, 0, 0.08);
-}
-
-.dark {
-  /* Surfaces - Deep Rich Dark Mode */
-  --bg-main:        #06040f;
-  --bg-section:     #0c0919;
-  --bg-card:        rgba(17, 13, 31, 0.75);
-  --border-card:    rgba(255, 255, 255, 0.08);
-  
-  --text-primary:   #f8fafc;
-  --text-secondary: #94a3b8;
-  --text-muted:     #475569;
-  
-  /* Vibrant Accents */
-  --accent-blue:    #3b82f6;
-  --accent-purple:  #a855f7;
-  --accent-green:   #10b981;
-  --accent-orange:  #f59e0b;
-  --accent-pink:    #ec4899;
-  
-  /* Glowing Shadows */
-  --card-shadow:    0 15px 35px -10px rgba(0,0,0,0.5), 0 5px 15px rgba(0,0,0,0.3);
-  
-  --header-bg:      rgba(6, 4, 15, 0.6);
-  --pill-bg:        rgba(255, 255, 255, 0.05);
-  --pill-border:    rgba(255, 255, 255, 0.1);
-  --input-bg:       rgba(255, 255, 255, 0.03);
-  --input-border:   rgba(255, 255, 255, 0.1);
 }
 
 /* ─── Tailwind theme bridge ──────────────────────────────── */
@@ -117,7 +89,6 @@ body {
 
 /* ─── Typography ─────────────────────────────────────────── */
 
-/* Apple uses tighter tracking for all headings */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
   letter-spacing: -0.025em;
@@ -128,11 +99,11 @@ h1, h2, h3, h4, h5, h6 {
 /* ─── Selection ──────────────────────────────────────────── */
 
 ::selection {
-  background: rgba(0, 113, 227, 0.25);
+  background: rgba(59, 130, 246, 0.25);
   color: var(--text-primary);
 }
 
-/* ─── Scrollbar — macOS-thin ─────────────────────────────── */
+/* ─── Scrollbar ─────────────────────────────────────────── */
 
 ::-webkit-scrollbar       { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
@@ -176,31 +147,26 @@ h1, h2, h3, h4, h5, h6 {
   -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
 }
 
-/* ─── Apple Card ─────────────────────────────────────────── */
+/* ─── Premium Card ─────────────────────────────────────────── */
 
 .premium-card {
   background:    var(--bg-card);
   border:        1px solid var(--border-card);
-  border-radius: 22px;              /* Apple's canonical 22px radius */
+  border-radius: 22px;
   box-shadow:    var(--card-shadow);
   transition:    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
                  box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
                  border-color 0.4s ease;
+  backdrop-filter: blur(10px);
 }
 
 .premium-card:hover {
-  transform:    translateY(-1px);
-  box-shadow:   0 8px 28px rgba(0,0,0,0.07), 0 2px 8px rgba(0,0,0,0.04);
-}
-
-.dark .premium-card:hover {
-  box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 4px 12px rgba(0,0,0,0.25);
-  border-color: rgba(255,255,255,0.12);
+  transform:    translateY(-2px);
+  box-shadow:   0 16px 40px rgba(0,0,0,0.1), 0 4px 12px rgba(0,0,0,0.06);
 }
 
 /* ─── Section layout container ───────────────────────────── */
 
-/* Single source of truth for ALL section widths */
 .section-container {
   width: 100%;
   max-width: 1024px;
@@ -219,6 +185,6 @@ h1, h2, h3, h4, h5, h6 {
 
 @media (min-width: 1280px) {
   .section-container {
-    max-width: 1100px;    /* Wider breathing room on large screens */
+    max-width: 1100px;
   }
 }
