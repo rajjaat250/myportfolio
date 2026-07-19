@@ -1,169 +1,132 @@
-import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { ArrowDown } from 'lucide-react'
+import { ArrowRight, Code2, Database, Layout, Sparkles } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
-const words = ['Python / Django Developer', 'React & Frontend Developer', 'Full Stack Developer']
-
-const up = (delay = 0) => ({
-  initial:    { opacity: 0, y: 18 },
-  animate:    { opacity: 1, y: 0  },
-  transition: { duration: 0.8, delay, ease: [0.16, 1, 0.3, 1] },
-})
+const FloatingIcon = ({ children, delay, x, y, rotate }) => (
+  <motion.div
+    initial={{ opacity: 0, scale: 0.5, rotate: 0 }}
+    animate={{ opacity: 1, scale: 1, rotate }}
+    transition={{ duration: 1, delay, type: 'spring' }}
+    className="absolute z-20"
+    style={{ left: x, top: y }}
+  >
+    <motion.div
+      animate={{ y: [0, -15, 0] }}
+      transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay }}
+      className="p-4 rounded-2xl bg-white/60 backdrop-blur-xl border border-white/40 shadow-xl"
+    >
+      {children}
+    </motion.div>
+  </motion.div>
+)
 
 export default function Hero() {
-  const scrollToAbout = () =>
-    document.querySelector('#about')?.scrollIntoView({ behavior: 'smooth' })
-
-  /* ── Typing effect ────────────────────────────────────── */
-  const [wordIdx, setWordIdx]   = useState(0)
-  const [charIdx, setCharIdx]   = useState(0)
-  const [deleting, setDeleting] = useState(false)
-
-  useEffect(() => {
-    const word = words[wordIdx]
-
-    if (!deleting && charIdx === word.length + 1) {
-      const t = setTimeout(() => setDeleting(true), 2600)
-      return () => clearTimeout(t)
-    }
-    if (deleting && charIdx === 0) {
-      const t = setTimeout(() => {
-        setDeleting(false)
-        setWordIdx((p) => (p + 1) % words.length)
-      }, 480)
-      return () => clearTimeout(t)
-    }
-
-    const t = setTimeout(
-      () => setCharIdx((p) => p + (deleting ? -1 : 1)),
-      deleting ? 28 : 55,
-    )
-    return () => clearTimeout(t)
-  }, [charIdx, deleting, wordIdx])
-
-  const displayText = words[wordIdx].substring(0, charIdx)
-
-  /* ── Render ───────────────────────────────────────────── */
   return (
-    <section
-      id="hero"
-      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-bg-main transition-colors duration-300"
-    >
-      {/* Ambient glow — dead centre, non-interactive */}
-      <div
-        className="pointer-events-none absolute inset-0 overflow-hidden"
-        aria-hidden="true"
-      >
-        <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] md:w-[1000px] h-[600px] md:h-[1000px] rounded-full blur-[100px] opacity-40 md:opacity-30 mix-blend-screen"
-          style={{
-            background:
-              'radial-gradient(circle at 30% 30%, var(--accent-purple) 0%, transparent 45%), radial-gradient(circle at 70% 70%, var(--accent-blue) 0%, transparent 45%)',
-          }}
-        />
+    <section className="relative min-h-screen flex items-center pt-24 pb-12 overflow-hidden bg-bg-main">
+      {/* Dynamic Background Gradients */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-1/4 -right-1/4 w-[800px] h-[800px] rounded-full blur-[120px] bg-accent-blue/10 animate-pulse" />
+        <div className="absolute -bottom-1/4 -left-1/4 w-[800px] h-[800px] rounded-full blur-[120px] bg-accent-purple/10" />
       </div>
 
-      {/* Content island */}
-      <div className="section-container relative z-10 flex flex-col items-center text-center pt-16 pb-20 gap-0">
-
-        {/* Availability badge */}
-        <motion.div {...up(0.1)} className="mb-8">
-          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-pill-bg border border-pill-border text-[11px] font-semibold text-text-primary tracking-[0.06em] uppercase backdrop-blur-md">
-            <span className="w-1.5 h-1.5 rounded-full bg-accent-green animate-pulse shrink-0 shadow-[0_0_8px_var(--accent-green)]" />
-            Open to Internships
-          </span>
-        </motion.div>
-
-        {/*
-          Apple display headline — font size driven by viewport width
-          so it never wraps awkwardly and always feels enormous.
-        */}
-        <motion.h1
-          {...up(0.18)}
-          className="font-black leading-none mb-6 select-none bg-gradient-to-r from-accent-purple via-accent-blue to-accent-green bg-clip-text text-transparent"
-          style={{
-            fontSize: 'clamp(52px, 11vw, 120px)',
-            letterSpacing: '-0.04em',
-          }}
-        >
-          RAJ CHAUDHARY
-        </motion.h1>
-
-        {/* Typing subtitle */}
-        <motion.p
-          {...up(0.30)}
-          className="text-[18px] md:text-[22px] font-medium text-text-secondary tracking-[-0.01em] h-9 flex items-center justify-center mb-5"
-        >
-          <span>{displayText}</span>
-          <span className="inline-block w-0.5 h-[20px] bg-accent-blue ml-1 animate-blink" />
-        </motion.p>
-
-        {/* Value proposition — concise, Apple-muted */}
-        <motion.p
-          {...up(0.40)}
-          className="text-[15px] md:text-base text-text-muted max-w-sm leading-relaxed mb-12"
-        >
-          Architecting backend systems and crafting high-performance
-          interactive interfaces.
-        </motion.p>
-
-        {/*
-          CTA row — Apple pattern:
-          • ONE solid pill button (primary action)
-          • Text links with → for secondary actions
-        */}
-        <motion.div
-          {...up(0.50)}
-          className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6"
-        >
-          {/* Primary pill */}
-          <a
-            href="/resume.pdf"
-            download
-            className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-text-primary text-bg-main text-[14px] font-semibold hover:opacity-80 transition-opacity duration-200 select-none"
+      <div className="section-container relative z-10 grid lg:grid-cols-2 gap-12 lg:gap-8 items-center h-full">
+        {/* Left Side: Typography & CTAs */}
+        <div className="flex flex-col gap-8 max-w-2xl">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="flex items-center gap-3"
           >
-            Download Resume
-          </a>
+            <span className="px-4 py-1.5 rounded-full bg-accent-blue/10 border border-accent-blue/20 text-accent-blue text-sm font-semibold flex items-center gap-2">
+              <Sparkles size={16} />
+              Full Stack Developer
+            </span>
+            <span className="px-4 py-1.5 rounded-full bg-accent-green/10 border border-accent-green/20 text-accent-green text-sm font-semibold flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-accent-green animate-pulse" />
+              Available for Internships
+            </span>
+          </motion.div>
 
-          {/* Arrow text links */}
-          <div className="flex items-center gap-6">
-            <a
-              href="https://github.com/rajjaat250"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[14px] font-medium text-accent-blue hover:underline underline-offset-2 transition-all"
-            >
-              GitHub&nbsp;→
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
+            <h1 className="text-6xl sm:text-7xl lg:text-8xl font-black text-text-primary tracking-tight leading-[1.05] mb-6">
+              Engineering <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-blue via-accent-purple to-accent-pink">
+                Digital Dreams
+              </span>
+            </h1>
+            <p className="text-lg md:text-xl text-text-secondary leading-relaxed max-w-xl font-medium">
+              Hi, I'm Raj Chaudhary. I architect scalable backend systems and craft high-performance, interactive user experiences.
+            </p>
+          </motion.div>
+
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="flex flex-wrap items-center gap-4 mt-2"
+          >
+            <Link to="/projects" className="group relative inline-flex items-center gap-2 px-8 py-4 rounded-full bg-text-primary text-white font-semibold text-base overflow-hidden hover:scale-105 transition-transform duration-300">
+              <div className="absolute inset-0 bg-gradient-to-r from-accent-blue to-accent-purple opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <span className="relative flex items-center gap-2">
+                Explore Work <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+              </span>
+            </Link>
+            
+            <a href="/resume.pdf" download className="px-8 py-4 rounded-full bg-pill-bg border-2 border-border-card text-text-primary font-semibold text-base hover:border-accent-blue hover:text-accent-blue transition-colors duration-300">
+              Download Resume
             </a>
-            <a
-              href="https://www.linkedin.com/in/raj-chaudhary-15213630b"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[14px] font-medium text-accent-blue hover:underline underline-offset-2 transition-all"
-            >
-              LinkedIn&nbsp;→
-            </a>
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
+
+        {/* Right Side: Visual Graphic / Abstract Representation */}
+        <div className="relative hidden lg:flex items-center justify-center h-full min-h-[600px]">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, delay: 0.3 }}
+            className="relative w-full max-w-[500px] aspect-square"
+          >
+            {/* Central glowing orb */}
+            <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-accent-blue via-accent-purple to-accent-pink opacity-20 blur-[60px] animate-pulse" />
+            
+            {/* Abstract geometric shape in center */}
+            <div className="absolute inset-16 rounded-3xl bg-white/40 backdrop-blur-2xl border border-white/50 shadow-2xl overflow-hidden flex flex-col">
+              <div className="h-10 border-b border-white/30 flex items-center px-4 gap-2 bg-white/20">
+                <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
+                <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
+                <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
+              </div>
+              <div className="flex-1 p-8 flex flex-col justify-center">
+                <div className="space-y-4">
+                  <div className="w-3/4 h-4 rounded-md bg-accent-blue/20" />
+                  <div className="w-1/2 h-4 rounded-md bg-accent-purple/20" />
+                  <div className="w-full h-4 rounded-md bg-accent-pink/20" />
+                  <div className="w-5/6 h-4 rounded-md bg-accent-green/20" />
+                  <div className="w-2/3 h-4 rounded-md bg-accent-blue/20" />
+                </div>
+              </div>
+            </div>
+
+            {/* Floating Tech Icons */}
+            <FloatingIcon delay={0.4} x="0%" y="10%" rotate={-10}>
+              <Layout size={32} className="text-accent-blue" />
+            </FloatingIcon>
+            
+            <FloatingIcon delay={0.6} x="80%" y="25%" rotate={15}>
+              <Code2 size={32} className="text-accent-purple" />
+            </FloatingIcon>
+            
+            <FloatingIcon delay={0.8} x="10%" y="75%" rotate={-5}>
+              <Database size={32} className="text-accent-pink" />
+            </FloatingIcon>
+          </motion.div>
+        </div>
       </div>
-
-      {/* Scroll cue — absolute bottom centre */}
-      <motion.button
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 0.6 }}
-        onClick={scrollToAbout}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 text-text-muted hover:text-text-secondary transition-colors cursor-pointer"
-        aria-label="Scroll down"
-      >
-        <span className="text-[9px] font-semibold tracking-[0.3em] uppercase">Scroll</span>
-        <motion.div
-          animate={{ y: [0, 5, 0] }}
-          transition={{ repeat: Infinity, duration: 2.5, ease: 'easeInOut' }}
-        >
-          <ArrowDown size={13} />
-        </motion.div>
-      </motion.button>
     </section>
   )
 }
