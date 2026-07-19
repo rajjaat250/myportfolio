@@ -1,29 +1,42 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import './index.css'
-import Navbar from './components/Navbar'
-import Footer from './components/Footer'
-import Home from './pages/Home'
-import ProjectsPage from './pages/ProjectsPage'
-import SkillsPage from './pages/SkillsPage'
-import CertificatesPage from './pages/CertificatesPage'
-import ContactPage from './pages/ContactPage'
+import { Routes, Route, useLocation } from 'react-router-dom'
+import { AnimatePresence } from 'framer-motion'
+import { useEffect } from 'react'
 
-export default function App() {
+import MainLayout from './components/layout/MainLayout'
+import PageLoader from './components/loaders/PageLoader'
+
+import Home from './pages/Home/Home'
+import About from './pages/About/About'
+import Projects from './pages/Projects/Projects'
+import Experience from './pages/Experience/Experience'
+import Skills from './pages/Skills/Skills'
+import Contact from './pages/Contact/Contact'
+
+function App() {
+  const location = useLocation()
+
+  // Scroll to top on route change
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [location.pathname])
+
   return (
-    <BrowserRouter>
-      <div className="w-full min-h-screen bg-bg-main text-text-primary transition-colors duration-300 selection:bg-accent-blue/30 selection:text-text-primary flex flex-col">
-        <Navbar />
-        <main className="w-full flex-grow pt-[44px]">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/projects" element={<ProjectsPage />} />
-            <Route path="/skills" element={<SkillsPage />} />
-            <Route path="/certificates" element={<CertificatesPage />} />
-            <Route path="/contact" element={<ContactPage />} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
-    </BrowserRouter>
+    <>
+      <PageLoader />
+      <AnimatePresence mode="wait">
+        <Routes location={location} key={location.pathname}>
+          <Route path="/" element={<MainLayout />}>
+            <Route index element={<Home />} />
+            <Route path="about" element={<About />} />
+            <Route path="projects" element={<Projects />} />
+            <Route path="experience" element={<Experience />} />
+            <Route path="skills" element={<Skills />} />
+            <Route path="contact" element={<Contact />} />
+          </Route>
+        </Routes>
+      </AnimatePresence>
+    </>
   )
 }
+
+export default App

@@ -1,63 +1,16 @@
-# Raj Chaudhary — Premium Portfolio
+# React + Vite
 
-A premium Apple-inspired personal portfolio built with **React.js**, **Tailwind CSS v4**, **Framer Motion**, and **Lucide React**.
+This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
 
-## 🚀 Getting Started
+Currently, two official plugins are available:
 
-```bash
-npm install
-npm run dev
-```
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-## 📁 Adding Your Content
+## React Compiler
 
-### Profile Photo
-Drop your photo as: `public/images/profile.jpg`
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-### Certificate Images
-Add to: `public/images/certificates/cert1.jpg`, `cert2.jpg`, etc.
-Then update the list in `src/components/Certificates.jsx`.
+## Expanding the Oxlint configuration
 
-### Project Screenshot
-Add to: `public/images/projects/farmvaani.jpg`
-
-### Resume
-Drop as: `public/resume.pdf`
-
-### Update Social Links
-- **GitHub & LeetCode**: Update in `src/components/GitHubSection.jsx` and `Footer.jsx`
-- **Email**: Update in `Contact.jsx` and `Footer.jsx`
-
-## 📧 EmailJS Setup
-
-1. Create a free account at [emailjs.com](https://emailjs.com)
-2. Create a Service, Email Template, and get your Public Key
-3. Copy `.env.example` → `.env`
-4. Fill in your keys:
-
-```env
-VITE_EMAILJS_SERVICE_ID=your_service_id
-VITE_EMAILJS_TEMPLATE_ID=your_template_id
-VITE_EMAILJS_PUBLIC_KEY=your_public_key
-```
-
-**EmailJS Template Variables** (use in your template):
-- `{{name}}` — sender's name
-- `{{email}}` — sender's email
-- `{{message}}` — message content
-
-## 🌐 Deploy to Vercel
-
-1. Push to GitHub
-2. Import repo in vercel.com
-3. Add environment variables in Vercel dashboard
-4. Deploy!
-
-## 🎨 Tech Stack
-
-- React.js + Vite
-- Tailwind CSS v4
-- Framer Motion
-- Lucide React Icons
-- EmailJS
-# myportfolio
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
