@@ -18,7 +18,7 @@ export const education = [
     id: 1,
     degree: "B.Tech in Computer Science & Information Technology (CSIT)",
     institution: "Ajay Kumar Garg Engineering College, Ghaziabad",
-    date: "2022 - 2026",
+    date: "2024 - 2028",
     location: "Ghaziabad, Uttar Pradesh",
     description: "CGPA: 7.86. Focusing on full-stack web development with Python/Django and React."
   },
@@ -34,7 +34,7 @@ export const education = [
     id: 3,
     degree: "High School (Class X)",
     institution: "LFA INTER COLLEGE",
-    date: "2020",
+    date: "2022",
     location: "Amroha, India",
     description: "Built the groundwork for problem-solving and analytical thinking with 86%."
   }

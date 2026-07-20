@@ -7,15 +7,6 @@ export const experience = [
     date: 'June 2025 – July 2025',
     description: 'Working on full-stack web applications, integrating APIs, and building responsive user interfaces with a focus on performance and accessibility.',
     skills: ['React', 'JavaScript', 'Tailwind CSS', 'API Integration']
-  },
-  {
-    id: 2,
-    role: 'Software Development Trainee',
-    company: 'AKGEC',
-    location: 'Ghaziabad, India',
-    date: '2023 - Present',
-    description: 'Engaged in comprehensive software development training, focusing on object-oriented programming, data structures, algorithms, and complex problem-solving techniques.',
-    skills: ['C++', 'Python', 'OOP', 'Data Structures']
   }
 ]
 
