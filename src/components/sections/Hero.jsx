@@ -30,8 +30,8 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter text-white mb-6 leading-[1.1]"
         >
-          CREATIVE <br />
-          <span className="premium-gradient-text">DEVELOPER</span>
+          FULL-STACK <br />
+          <span className="premium-gradient-text">ENGINEER</span>
         </motion.h1>
 
         <motion.p
