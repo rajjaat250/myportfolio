@@ -68,6 +68,7 @@ export default function Navbar() {
 
           <a
             href="/resume.pdf"
+            download="Raj_Chaudhary_Resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
             className="hidden md:inline-flex items-center justify-center px-6 py-2.5 bg-white text-black font-bold text-sm rounded-full hover:bg-brand hover:text-white transition-colors duration-300"
@@ -109,6 +110,7 @@ export default function Navbar() {
             ))}
             <a
               href="/resume.pdf"
+              download="Raj_Chaudhary_Resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="mt-8 px-8 py-4 bg-white text-black font-bold text-xl rounded-full"

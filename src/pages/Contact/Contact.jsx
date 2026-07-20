@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { useState } from 'react'
 import emailjs from '@emailjs/browser'
-import { Mail, Send, Loader2 } from 'lucide-react'
+import { Mail, Send, Loader2, Phone } from 'lucide-react'
 import { personalInfo } from '../../data/personalInfo'
 import GlassCard from '../../components/ui/GlassCard'
 import MagneticButton from '../../components/buttons/MagneticButton'
@@ -58,6 +58,17 @@ export default function Contact() {
                   <div className="text-xl font-bold text-white">{personalInfo.email}</div>
                 </div>
               </a>
+              {personalInfo.phone && (
+                <a href={`tel:${personalInfo.phone}`} className="group flex items-center gap-6 p-6 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
+                  <div className="w-16 h-16 rounded-full bg-brand/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <Phone className="text-brand" size={28} />
+                  </div>
+                  <div>
+                    <div className="text-sm font-semibold text-text-muted mb-1 uppercase tracking-wider">Phone</div>
+                    <div className="text-xl font-bold text-white">{personalInfo.phone}</div>
+                  </div>
+                </a>
+              )}
             </div>
           </motion.div>
 

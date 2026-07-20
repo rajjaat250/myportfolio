@@ -42,11 +42,12 @@ export const projects = [
     ],
     github: 'https://github.com/rajjaat250/ecommerce',
     live: 'https://indestack.live',
-    image: '/images/projects/ecommerce-1.png',
+    image: '/images/projects/stake-1.png',
     gallery: [
-      '/images/projects/ecommerce-1.png',
-      '/images/projects/ecommerce-2.png',
-      '/images/projects/ecommerce-3.png',
+      '/images/projects/stake-1.png',
+      '/images/projects/stake-2.png',
+      '/images/projects/stake-3.png',
+      '/images/projects/stake-4.png',
     ],
   },
   {
@@ -66,12 +67,11 @@ export const projects = [
     ],
     github: '',
     live: 'https://stakegameclone.vercel.app/',
-    image: '/images/projects/stake-1.png',
+    image: '/images/projects/ecommerce-1.png',
     gallery: [
-      '/images/projects/stake-1.png',
-      '/images/projects/stake-2.png',
-      '/images/projects/stake-3.png',
-      '/images/projects/stake-4.png',
+      '/images/projects/ecommerce-1.png',
+      '/images/projects/ecommerce-2.png',
+      '/images/projects/ecommerce-3.png',
     ],
   },
 ]

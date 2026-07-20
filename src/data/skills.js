@@ -1,12 +1,10 @@
 import {
-  FaPython, FaReact, FaDocker, FaAws, FaGithub, FaLinux
+  FaPython, FaReact, FaGithub, FaCss3
 } from 'react-icons/fa'
 import {
-  SiCplusplus, SiJavascript, SiHtml5, SiTailwindcss, SiDjango, SiFirebase, SiSupabase, SiPostman, SiVercel
+  SiCplusplus, SiJavascript, SiHtml5, SiTailwindcss, SiDjango, SiFirebase, SiPostgresql
 } from 'react-icons/si'
-import { BsTerminal } from 'react-icons/bs'
-import { AiOutlineCode, AiOutlineDatabase } from 'react-icons/ai'
-import { BiNetworkChart } from 'react-icons/bi'
+import { AiOutlineDatabase, AiOutlineApi, AiOutlineRobot } from 'react-icons/ai'
 
 export const skillCategories = [
   {
@@ -15,47 +13,42 @@ export const skillCategories = [
     desc: 'Programming languages used to build software solutions.',
     skills: [
       { name: 'Python',       icon: FaPython },
-      { name: 'C/C++',        icon: SiCplusplus },
+      { name: 'C++',          icon: SiCplusplus },
       { name: 'JavaScript',   icon: SiJavascript },
-      { name: 'HTML/CSS',     icon: SiHtml5 },
-      { name: 'Bash',         icon: BsTerminal },
     ],
   },
   {
-    id: 'frameworks',
-    label: 'Frameworks',
-    desc: 'Backend architectures and frontend libraries.',
+    id: 'frontend',
+    label: 'Frontend',
+    desc: 'Building responsive and interactive user interfaces.',
     skills: [
-      { name: 'Django',      icon: SiDjango },
-      { name: 'Django REST', icon: AiOutlineDatabase },
-      { name: 'React.js',    icon: FaReact },
-      { name: 'Tailwind CSS',icon: SiTailwindcss },
+      { name: 'React.js',     icon: FaReact },
+      { name: 'HTML5',        icon: SiHtml5 },
+      { name: 'CSS3',         icon: FaCss3 },
+      { name: 'Tailwind CSS', icon: SiTailwindcss },
+    ],
+  },
+  {
+    id: 'backend',
+    label: 'Backend',
+    desc: 'Backend architectures, databases, and APIs.',
+    skills: [
+      { name: 'Django',       icon: SiDjango },
+      { name: 'Django REST',  icon: AiOutlineDatabase },
+      { name: 'REST API Design', icon: AiOutlineApi },
+      { name: 'SQL',          icon: AiOutlineDatabase },
+      { name: 'PostgreSQL',   icon: SiPostgresql },
     ],
   },
   {
     id: 'tools',
-    label: 'Tools & Cloud',
-    desc: 'Development, deployment, and cloud infrastructure.',
+    label: 'Tools & Other',
+    desc: 'Development, deployment, and AI-assisted workflows.',
     skills: [
       { name: 'Git & GitHub', icon: FaGithub },
       { name: 'Firebase',     icon: SiFirebase },
-      { name: 'AWS (S3)',     icon: FaAws },
-      { name: 'Supabase',     icon: SiSupabase },
-      { name: 'Docker',       icon: FaDocker },
-      { name: 'Linux',        icon: FaLinux },
-      { name: 'Postman',      icon: SiPostman },
-      { name: 'Vercel',       icon: SiVercel },
-    ],
-  },
-  {
-    id: 'coursework',
-    label: 'Coursework',
-    desc: 'Academic foundations in computer science.',
-    skills: [
-      { name: 'Operating Systems',   icon: AiOutlineCode },
-      { name: 'Computer Networks',   icon: BiNetworkChart },
-      { name: 'DBMS',                icon: AiOutlineDatabase },
-      { name: 'OOP',                 icon: AiOutlineCode },
+      { name: 'AI-Assisted Dev', icon: AiOutlineRobot },
     ],
   },
 ]
+
